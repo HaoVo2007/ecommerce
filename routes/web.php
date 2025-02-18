@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\ProductController;
+use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -17,7 +17,13 @@ Route::get('/admin', function () {
 })->middleware(['auth', 'verified'])->name('admin_dashboard');
 
 Route::prefix('admin')->group(function () {
-    Route::get('product/view', [ProductController::class, 'index']);
+    Route::get('product/view', [ProductController::class, 'viewProduct']);
+    //ADMIN PRODUCT
+    Route::get('/product/add_product/view', [ProductController::class, 'viewAddProduct']);
+    Route::get('/product', [ProductController::class, 'getProduct']);
+    Route::post('/product/add_product', [ProductController::class, 'addProduct']);
+    //ADMIN PRODUCT
+
 });
 
 Route::middleware('auth')->group(function () {
