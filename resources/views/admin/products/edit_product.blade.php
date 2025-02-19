@@ -237,7 +237,7 @@
         <div class="p-4 sm:ml-64 mt-16">
             <div class="flex w-full items-center rounded-full">
                 <div class="flex-1 border-b border-gray-300"></div>
-                <span class="text-black text-lg font-semibold leading-8 px-8 py-3">ADD PRODUCT</span>
+                <span class="text-black text-lg font-semibold leading-8 px-8 py-3">EDIT PRODUCT</span>
                 <div class="flex-1 border-b border-gray-300"></div>
             </div>
             <div class="p-4 border-gray-200 border-dashed rounded-lg dark:border-gray-700">
@@ -266,7 +266,7 @@
                                         Name</label>
                                     <input type="name" id="nameProduct"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                        required />
+                                        required value="{{ $data->name }}" />
                                 </div>
 
                                 <div class="mb-3 basis-1/2">
@@ -275,7 +275,7 @@
                                         Price</label>
                                     <input type="number" id="priceProduct"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                        required />
+                                        required value="{{ $data->price }}" />
                                 </div>
                             </div>
 
@@ -283,7 +283,7 @@
                                 <label for="description"
                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description</label>
                                 <textarea id="description" name="description" rows="5"
-                                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"></textarea>
+                                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">{{ $data->description }}</textarea>
                             </div>
 
                             <div class="mb-3">
@@ -296,8 +296,9 @@
                                 </select>
                             </div>
                         </div>
+
                         <div class="basis-1/3">
-                            <div class="">
+                            <div class="mb-3">
                                 <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                                     for="main_image">Main Image</label>
                                 <label>
@@ -315,7 +316,7 @@
                             </div>
                             <div class="mb-2">
                                 <div class="w-full flex items-center justify-center p-5" id="main-image-preview">
-
+                                    
                                 </div>
                             </div>
                             <div class="mb-4">
@@ -342,48 +343,66 @@
 
 
                             <div class=" mb-2 grid grid-cols-2 gap-6" id="sub-image-preview">
-
+                               
                             </div>
-
 
                             <div class="mb-3">
                                 <div class="size-container">
-                                    <div class="flex items-center gap-5 mb-3" id="size-container">
-                                        <div class="mb-3 basis-1/2">
-                                            <label for="name-size"
-                                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Name
-                                                Size</label>
-                                            <input type="text" id="name-size" name="name_size[]"
-                                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                                required />
-                                        </div>
-
-                                        <div class="mb-3 basis-1/2">
-                                            <label for=""
-                                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Quantity</label>
-                                            <input type="number" id="quantity" name="name_quantity[]"
-                                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                                required />
-                                        </div>
-
-                                        <label id="add-size"
-                                            class="flex flex-col items-center justify-center px-3 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-gray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
-                                            <div class="flex flex-col items-center justify-center pt-3 pb-3">
-                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none"
-                                                    viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-                                                    class="size-6">
-                                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                                        d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                                                </svg>
+                                    @foreach ($data->productSizes as $item)
+                                        <div class="flex items-center gap-5 mb-3" id="size-container">
+                                            <div class="mb-3 basis-1/2">
+                                                <label for="name-size"
+                                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                                    Name Size
+                                                </label>
+                                                <input type="text" id="name-size" name="name_size[]"
+                                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                                    required value="{{ $item->size }}" />
                                             </div>
-                                        </label>
-                                    </div>
+                                            <div class="mb-3 basis-1/2">
+                                                <label for=""
+                                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                                    Quantity
+                                                </label>
+                                                <input type="number" id="quantity" name="name_quantity[]"
+                                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                                    required value="{{ $item->quantity }}" />
+                                            </div>
+
+                                            @if ($loop->first)
+                                                <label id="add-size"
+                                                    class="flex flex-col items-center justify-center px-3 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-gray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+                                                    <div class="flex flex-col items-center justify-center pt-3 pb-3">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                            viewBox="0 0 24 24" stroke-width="1.5"
+                                                            stroke="currentColor" class="size-6">
+                                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                                d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                                                        </svg>
+                                                    </div>
+                                                </label>
+                                            @else
+                                                <label
+                                                    class="remove-size flex flex-col items-center justify-center px-3 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-gray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+                                                    <div class="flex flex-col items-center justify-center pt-3 pb-3">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                            viewBox="0 0 24 24" stroke-width="1.5"
+                                                            stroke="currentColor" class="size-6">
+                                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                                d="M5 12h14" />
+                                                        </svg>
+                                                    </div>
+                                                </label>
+                                            @endif
+                                        </div>
+                                    @endforeach
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+            <input type="hidden" value="{{$data->id}}" id="id_product">
         </div>
 
     </x-app-layout>
@@ -392,6 +411,51 @@
         $(document).ready(function() {
 
             let editorInstance;
+            let oldMainImage = '{{$data->mainImage->image_url}}';
+            let oldSubImages = @json($data->subImage->pluck('image_url'));
+            let id = $('#id_product').val();
+
+            if (oldMainImage) {
+                const mainImageWrapper = $('<div>').addClass('relative inline-block');
+                const mainImg = $('<img>')
+                    .attr('src', `/storage/${oldMainImage}`)
+                    .addClass('h-40 w-auto object-cover mt-2 mr-2 rounded-lg');
+                const removeButton = $('<div>')
+                    .addClass('absolute top-0 right-0 bg-black rounded-full p-1 cursor-pointer')
+                    .html(`
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 text-white">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+                        </svg>
+                    `)
+                    .on('click', function() {
+                        mainImageWrapper.remove();
+                        oldMainImage = null; 
+                    });
+
+                mainImageWrapper.append(mainImg).append(removeButton);
+                $('#main-image-preview').append(mainImageWrapper);
+            }
+
+            oldSubImages.forEach(imageUrl => {
+                const subImageWrapper = $('<div>').addClass('relative inline-block m-1');
+                const subImg = $('<img>')
+                    .attr('src', `/storage/${imageUrl}`)
+                    .addClass('h-40 w-auto object-cover mt-2 rounded-lg');
+                const removeButton = $('<div>')
+                    .addClass('absolute top-0 right-0 bg-black rounded-full p-1 cursor-pointer')
+                    .html(`
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 text-white">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+                        </svg>
+                    `)
+                    .on('click', function() {
+                        subImageWrapper.remove();
+                        oldSubImages = oldSubImages.filter(img => img !== imageUrl); 
+                    });
+
+                subImageWrapper.append(subImg).append(removeButton);
+                $('#sub-image-preview').append(subImageWrapper);
+            });
 
             $('#main_image').on('change', function(e) {
 
@@ -403,24 +467,24 @@
                 reader.onload = function(e) {
 
                     const imageWrapper = $('<div>')
-                    .addClass('relative inline-block');
-                
+                        .addClass('relative inline-block');
+
                     const img = $('<img>')
                         .attr('src', e.target.result)
                         .addClass('h-40 w-auto object-cover mt-2 mr-2 rounded-lg');
-                    
+
                     const removeButton = $('<div>')
                         .addClass('absolute top-0 right-0 bg-black rounded-full p-1 cursor-pointer')
                         .html(`
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 text-white">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
-                            </svg>
-                        `)
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 text-white">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+                        </svg>
+                    `)
                         .on('click', function() {
                             imageWrapper.remove();
                             $('#main_image').val('');
                         });
-                    
+
                     imageWrapper.append(img).append(removeButton);
                     previewContainer.append(imageWrapper);
                 };
@@ -453,7 +517,7 @@
                             const removeButton = $('<div>')
                                 .addClass(
                                     'absolute top-0 -right-0.5 bg-black rounded-full p-1 cursor-pointer'
-                                    )
+                                )
                                 .html(`
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 text-white">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
@@ -482,6 +546,8 @@
                 $('#sub_image')[0].files = dataTransfer.files;
             }
 
+
+
             $('#btn-save').on('click', function() {
                 let formData = new FormData();
                 let button = $('#btn-save');
@@ -498,11 +564,19 @@
                 formData.append('description', editorInstance.getData());
                 formData.append('category', $('#categoryProduct').val());
 
-                formData.append('mainImage', $('#main_image')[0].files[0]);;
+                if ($('#main_image')[0].files.length > 0) {
+                    formData.append('mainImage', $('#main_image')[0].files[0]);
+                } else if (oldMainImage) {
+                    formData.append('old_main_image', oldMainImage);
+                }
 
                 for (let i = 0; i < selectedFiles.length; i++) {
                     formData.append('subImages[]', selectedFiles[i]);
                 }
+
+                oldSubImages.forEach(imageUrl => {
+                    formData.append('old_sub_images[]', imageUrl);
+                });
 
                 $("input[name='name_size[]']").each(function() {
                     formData.append('sizes[]', $(this).val());
@@ -513,7 +587,7 @@
                 });
 
                 $.ajax({
-                    url: '/admin/product/add_product',
+                    url: `/admin/product/update_product/${id}`, 
                     method: 'POST',
                     data: formData,
                     contentType: false,
@@ -521,7 +595,7 @@
                     success: function(response) {
                         swal("Good job!", response.message, response.status)
                         .then( () => {
-                            window.location.href = "/admin/product/view";
+                            window.location.href = `/admin/product/edit_product/${id}`;
                         });
                     },
                     error: function(error) {
@@ -537,6 +611,7 @@
                             }
                 });
             });
+
 
             $('#add-size').on('click', function() {
                 let newSize = `

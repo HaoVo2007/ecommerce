@@ -13,17 +13,23 @@ use Illuminate\Support\Facades\Validator;
 class ProductController extends Controller
 {
     public function viewProduct() {
-        return view('admin.products.product');
+        return view('admin.products.index');
     }
 
     public function viewAddProduct() {
         return view('admin.products.add_product');
     }
 
-    public function getProduct() {
+    public function getProduct(Request $request) {
 
-        $data = Product::with('productSizes', 'mainImage', 'subImage', 'category')->get();
-
+        if ($request->keyWord) {
+            $data = Product::with('productSizes', 'mainImage', 'subImage', 'category')
+                          ->where('name', 'LIKE', '%'.$request->keyWord.'%')
+                          ->paginate(5);
+        } else {
+            $data = Product::with('productSizes', 'mainImage', 'subImage', 'category')
+                          ->paginate(5);
+        }
         return response()->json([
             'status' => 'success',
             'message' => 'Get data successfully',
@@ -113,12 +119,216 @@ class ProductController extends Controller
         } catch (\Throwable $th) {
 
             DB::rollBack();
+
             return response()->json([
                 'status' => 'error',
                 'message' => 'Failed to add product',
                 'error' => $th->getMessage(),
             ], 500);
 
+        }
+
+    }
+
+    public function editProduct(Request $request, $id) {
+
+        $data = Product::with('productSizes', 'mainImage', 'subImage', 'category')->findOrFail($id);
+
+        return view('admin.products.edit_product', ['data' => $data]);
+
+    }
+
+    public function updateProduct(Request $request, $id) {
+
+        $validator = Validator::make($request->all(), [
+            'name'        => 'required|string|max:255',
+            'price'       => 'required|numeric|min:0',
+            'category'    => 'required',
+            'description' => 'nullable|string',
+            'mainImage'   => 'image|mimes:jpeg,png,jpg,gif,webp|max:2048',
+            'subImages.*' => 'image|mimes:jpeg,png,jpg,gif,webp|max:2048',
+            'sizes'       => 'required|array',
+            'sizes.*'     => 'string|max:50',
+            'quantities'  => 'required|array',
+            'quantities.*'=> 'integer|min:1',
+        ]);
+
+        if($validator->fails()) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Please enter complete information',
+                'error' => $validator->errors(),
+            ], 422);
+        }
+
+        DB::beginTransaction();
+
+        try {
+            
+            $data = Product::findOrFail($id);
+
+            $product = $data->update([
+                'name' => $request->name,
+                'price' => $request->price,
+                'description' => $request->description,
+                'category_id' => $request->category,
+            ]);
+
+            $subImageOld = $request->old_sub_images ?? [];
+            $currentSubImages = ProductImage::where('product_id', $id)->where('image_main', 0)->get();
+            
+            if ($request->hasFile('mainImage')) {
+
+                if ($data->mainImage) {
+
+                    $oldMainImagePath = public_path('storage/' . $data->mainImage->image_url);
+
+                    if (file_exists($oldMainImagePath)) {
+                        unlink($oldMainImagePath);
+                    }
+
+                    $data->mainImage->delete();
+
+                    $mainImagePath = $request->file('mainImage')->store('products', 'public');
+
+                    ProductImage::create([
+                        'product_id' => $data->id,
+                        'image_url' => $mainImagePath,
+                        'image_main' => 1
+                    ]);
+
+                }
+            }
+
+            foreach ($currentSubImages as $subImage) {
+                if (!in_array($subImage->image_url, $subImageOld)) {
+                    $subImagePath = public_path('storage/' . $subImage->image_url);
+                    if (file_exists($subImagePath)) {
+                        unlink($subImagePath);
+                    }
+                    $subImage->delete();
+                }
+            }
+
+            if ($request->hasFile('subImages')) {
+                foreach ($request->file('subImages') as $file) {
+                    $subImagePath = $file->store('products', 'public');
+                    ProductImage::create([
+                        'product_id' => $data->id,
+                        'image_url' => $subImagePath,
+                        'image_main' => 0
+                    ]);
+                }
+            }
+
+            $sizes = $request->sizes;
+            $quantities = $request->quantities;
+            
+            $data->productSizes()->delete();
+            for($i = 0; $i < count($sizes); $i++) {
+    
+                ProductSize::create([
+                    'product_id' => $data->id,
+                    'size' => $sizes[$i],
+                    'quantity' => $quantities[$i],
+                ]);
+            }
+
+            DB::commit();
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Product updated successfully',
+                'product' => $product
+            ]);
+
+        } catch (\Throwable $th) {
+
+            DB::rollBack();
+
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Failed to add product',
+                'error' => $th->getMessage(),
+            ], 500);
+        }
+    }
+
+    public function deleteProduct(Request $request, $id) {
+
+            $data = Product::findOrFail($id);
+
+            if($data->productSizes()->exists()) {
+                $data->productSizes()->delete();
+            }
+
+            if($data->mainImage) {
+                if(file_exists(public_path('storage/' . $data->mainImage->image_url))) {
+                    unlink(public_path('storage/' . $data->mainImage->image_url));
+                }
+                $data->mainImage->delete();
+            }
+
+            if ($data->subImage()->exists()) {
+                foreach ($data->subImage as $subImage) {
+                    if (file_exists(public_path('storage/' . $subImage->image_url))) {
+                        unlink(public_path('storage/' . $subImage->image_url)); 
+                    }
+                    $subImage->delete(); 
+                }
+            }
+
+            $data->delete();
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Product deleted successfully'
+        ]);
+
+    }
+
+    public function deleteAllProduct(Request $request) {
+
+        if ($request->checkedIds) {
+            
+            foreach($request->checkedIds as $item) {
+
+                $data = Product::findOrFail($item);
+
+                if($data->productSizes()->exists()) {
+                    $data->productSizes()->delete();
+                }
+        
+                if($data->mainImage) {
+                    if(file_exists(public_path('storage/' . $data->mainImage->image_url))) {
+                        unlink(public_path('storage/' . $data->mainImage->image_url));
+                    }
+                    $data->mainImage->delete();
+                }
+        
+                if ($data->subImage()->exists()) {
+                    foreach ($data->subImage as $subImage) {
+                        if (file_exists(public_path('storage/' . $subImage->image_url))) {
+                            unlink(public_path('storage/' . $subImage->image_url)); 
+                        }
+                        $subImage->delete(); 
+                    }
+                }
+        
+                $data->delete();
+
+            }
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Product deleted successfully'
+            ]);
+
+        } else {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'No products selected yet'
+            ]);
         }
 
     }
