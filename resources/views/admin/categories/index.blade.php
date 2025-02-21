@@ -131,7 +131,7 @@
         <div class="pt-4 sm:ml-64 mt-16">
             <div class="flex w-full items-center rounded-full">
                 <div class="flex-1 border-b border-gray-300"></div>
-                <span class="text-black text-lg font-semibold leading-8 px-8 py-3">CATEGORY LIST</span>
+                <span class="text-black text-lg font-semibold leading-8 px-8 py-3 uppercase">{{trans('message.category-list')}}</span>
                 <div class="flex-1 border-b border-gray-300"></div>
             </div>
             <div id="static-backdrop-modal" class="fixed inset-0 hidden z-50 ">
@@ -140,15 +140,14 @@
                     class="relative top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white rounded-lg shadow-xl w-1/2 p-10">
                     <div class="flex w-full items-center rounded-full">
                         <div class="flex-1 border-b border-gray-300"></div>
-                        <span class="text-black text-lg font-semibold leading-8 px-8 py-3">ADD CATEGORY</span>
+                        <span class="text-black text-lg font-semibold leading-8 px-8 py-3 uppercase">{{trans('message.add-category')}}</span>
                         <div class="flex-1 border-b border-gray-300"></div>
                     </div>
 
                     <div class="p-6">
                         <div class="mb-3">
                             <label for="name"
-                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Category
-                                Name</label>
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{trans('message.category-name')}}</label>
                             <input type="name" id="nameCategory"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                 required />
@@ -156,8 +155,7 @@
 
                         <div class="mb-3">
                             <label for="category"
-                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Parent
-                                Category</label>
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{trans('message.parent-category')}}</label>
                             <select id="parentCategory"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                             </select>
@@ -172,7 +170,7 @@
                                 <path stroke-linecap="round" stroke-linejoin="round"
                                     d="M8.25 9V5.25A2.25 2.25 0 0 1 10.5 3h6a2.25 2.25 0 0 1 2.25 2.25v13.5A2.25 2.25 0 0 1 16.5 21h-6a2.25 2.25 0 0 1-2.25-2.25V15M12 9l3 3m0 0-3 3m3-3H2.25" />
                             </svg>
-                            Cancel
+                            {{trans('message.cancel')}}
                         </button>
                         <button id="btn-save" type="button"
                             class="flex justify-center items-center gap-2 text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800">
@@ -181,7 +179,7 @@
                                 <path stroke-linecap="round" stroke-linejoin="round"
                                     d="M2.25 13.5h3.86a2.25 2.25 0 0 1 2.012 1.244l.256.512a2.25 2.25 0 0 0 2.013 1.244h3.218a2.25 2.25 0 0 0 2.013-1.244l.256-.512a2.25 2.25 0 0 1 2.013-1.244h3.859m-19.5.338V18a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18v-4.162c0-.224-.034-.447-.1-.661L19.24 5.338a2.25 2.25 0 0 0-2.15-1.588H6.911a2.25 2.25 0 0 0-2.15 1.588L2.35 13.177a2.25 2.25 0 0 0-.1.661Z" />
                             </svg>
-                            Save
+                            {{trans('message.save')}}
                         </button>
                     </div>
                 </div>
@@ -190,7 +188,7 @@
                 <div class="flex justify-between items-center">
                     <div class="w-1/3">
                         <label for="default-search"
-                            class="text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
+                            class="text-sm font-medium text-gray-900 sr-only dark:text-white">{{trans('message.search')}}</label>
                         <div class="relative">
                             <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
                                 <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
@@ -201,9 +199,9 @@
                             </div>
                             <input type="search" style="padding-left: 35px" id="key-word"
                                 class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                placeholder="Search Mockups, Logos..." required />
+                                placeholder="{{trans('message.search-name')}}" required />
                             <button id="btn-search" type="submit"
-                                class="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Search</button>
+                                class="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">{{trans('message.search')}}</button>
                         </div>
                     </div>
 
@@ -217,7 +215,7 @@
                                 <path stroke-linecap="round" stroke-linejoin="round"
                                     d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                             </svg>
-                            Add Category
+                            {{trans('message.add-category')}}
                         </button>
                         <button id="btn-delete-all" type="button"
                             class="flex justify-center items-center gap-2 text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800">
@@ -227,7 +225,7 @@
                                 <path stroke-linecap="round" stroke-linejoin="round"
                                     d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
                             </svg>
-                            Delete
+                            {{trans('message.delete')}}
                         </button>
                     </div>
                 </div>
@@ -246,13 +244,13 @@
                                             </th>
                                             <th scope="col"
                                                 class="p-5 text-left whitespace-nowrap text-sm leading-6 font-semibold text-gray-900 capitalize">
-                                                Name </th>
+                                                {{trans('message.name')}}</th>
                                             <th scope="col"
                                                 class="p-5 text-left whitespace-nowrap text-sm leading-6 font-semibold text-gray-900 capitalize min-w-[150px]">
-                                                Category </th>
+                                                {{trans('message.category')}}</th>
                                             <th scope="col"
                                                 class="p-5 text-left whitespace-nowrap text-sm leading-6 font-semibold text-gray-900 capitalize">
-                                                Actions </th>
+                                                {{trans('message.action')}}</th>
                                         </tr>
                                     </thead>
                                     <tbody class="divide-y divide-gray-300 " id="table-container">
@@ -330,6 +328,9 @@
             }
 
             function loadCategory(page = 1, keyWord = '') {
+                let goodJob = `{{ trans('message.good-job') }}`;
+                let Error = `{{ trans('message.error') }}`;
+                let wentWrong = `{{ trans('message.went-wrong') }}`;
                 $('#table-container').empty();
                 $.ajax({
                     url: `/admin/category?page=${page}`,
@@ -346,7 +347,7 @@
                         }
                     },
                     error: function(error) {
-                        console.error('Error loading categories:', error);
+                        swal(Error, wentWrong, "error");
                     }
                 });
             }
@@ -364,14 +365,14 @@
                     },
                     cache: true
                 },
-                placeholder: 'Select category',
+                placeholder: '{{trans('message.select-category')}}',
                 allowClear: true,
                 language: {
                     searching: function() {
-                        return "Loading...";
+                        return '{{trans('message.loading')}}';
                     },
                     noResults: function() {
-                        return "No result";
+                        return '{{trans('message.no-result')}}';
                     }
                 }
             });
@@ -381,7 +382,9 @@
             });
 
             $('#btn-save').on('click', function() {
-
+                let goodJob = `{{ trans('message.good-job') }}`;
+                let error = `{{ trans('message.error') }}`;
+                let wentWrong = `{{ trans('message.went-wrong') }}`;
                 let name = $('#nameCategory').val();
                 let parentId = $('#parentCategory').val();
 
@@ -391,7 +394,7 @@
                             <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"/>
                             <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="#1C64F2"/>
                         </svg>
-                        Loading...
+                        {{trans('message.loading')}}
                     `);
                 $.ajax({
                     url: '/admin/category/add_category',
@@ -402,20 +405,20 @@
                         parentId: parentId,
                     },
                     success: function(response) {
-                        swal("Good job!", response.message, response.status)
+                        swal(goodJob, response.message, response.status)
                             .then(() => {
                                 window.location.href = "/admin/category/view";
                             });
                     },
                     error: function(error) {
-                        swal("Error!", "Something went wrong!", "error");
+                        swal(Error, wentWrong, "error");
                     },
                     complete: function() {
                         button.prop('disabled', false).html(`
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 13.5h3.86a2.25 2.25 0 0 1 2.012 1.244l.256.512a2.25 2.25 0 0 0 2.013 1.244h3.218a2.25 2.25 0 0 0 2.013-1.244l.256-.512a2.25 2.25 0 0 1 2.013-1.244h3.859m-19.5.338V18a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18v-4.162c0-.224-.034-.447-.1-.661L19.24 5.338a2.25 2.25 0 0 0-2.15-1.588H6.911a2.25 2.25 0 0 0-2.15 1.588L2.35 13.177a2.25 2.25 0 0 0-.1.661Z" />
                                     </svg>
-                                    Save
+                                    {{trans('message.save')}}
                                 `);
                     }
                 });

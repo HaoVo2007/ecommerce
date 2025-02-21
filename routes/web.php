@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Session;
 
 Route::get('/', function () {
     return view('welcome');
@@ -16,6 +17,12 @@ Route::get('/home', function () {
 Route::get('/admin', function () {
     return view('admin.index');
 })->middleware(['auth', 'verified'])->name('admin_dashboard');
+
+Route::get('language/{lang}', function ($lang) {
+    session()->put('locale', $lang);
+    session()->save();
+    return redirect()->back();
+})->name('language.switch');
 
 Route::prefix('admin')->group(function () {
     //ADMIN PRODUCT

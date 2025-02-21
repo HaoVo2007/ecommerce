@@ -17,6 +17,7 @@ return new class extends Migration
             $table->longText('description');
             $table->string('price');
             $table->integer('status')->default(1);
+            $table->integer('type');
             $table->integer('category_id');
             $table->timestamps();
         });

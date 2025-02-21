@@ -32,7 +32,6 @@ class ProductController extends Controller
         }
         return response()->json([
             'status' => 'success',
-            'message' => 'Get data successfully',
             'data' => $data,
         ]);
     }
@@ -55,7 +54,7 @@ class ProductController extends Controller
         if($validator->fails()) {
             return response()->json([
                 'status' => 'error',
-                'message' => 'Please enter complete information',
+                'message' => trans('message.enter-infor'),
                 'error' => $validator->errors(),
             ], 422);
         }
@@ -112,7 +111,7 @@ class ProductController extends Controller
 
             return response()->json([
                 'status' => 'success',
-                'message' => 'Product added successfully',
+                'message' => trans('message.add-product-success'),
                 'product' => $product
             ]);
     
@@ -122,7 +121,7 @@ class ProductController extends Controller
 
             return response()->json([
                 'status' => 'error',
-                'message' => 'Failed to add product',
+                'message' => trans('message.add-product-fail'),
                 'error' => $th->getMessage(),
             ], 500);
 
@@ -156,7 +155,7 @@ class ProductController extends Controller
         if($validator->fails()) {
             return response()->json([
                 'status' => 'error',
-                'message' => 'Please enter complete information',
+                'message' => trans('message.enter-infor'),
                 'error' => $validator->errors(),
             ], 422);
         }
@@ -238,7 +237,7 @@ class ProductController extends Controller
 
             return response()->json([
                 'status' => 'success',
-                'message' => 'Product updated successfully',
+                'message' => trans('message.update-product-success'),
                 'product' => $product
             ]);
 
@@ -248,7 +247,7 @@ class ProductController extends Controller
 
             return response()->json([
                 'status' => 'error',
-                'message' => 'Failed to add product',
+                'message' => trans('message.update-product-fail'),
                 'error' => $th->getMessage(),
             ], 500);
         }
@@ -282,7 +281,7 @@ class ProductController extends Controller
 
         return response()->json([
             'status' => 'success',
-            'message' => 'Product deleted successfully'
+            'message' => trans('message.delete-product')
         ]);
 
     }
@@ -321,13 +320,13 @@ class ProductController extends Controller
 
             return response()->json([
                 'status' => 'success',
-                'message' => 'Product deleted successfully'
+                'message' => trans('message.delete-product')
             ]);
 
         } else {
             return response()->json([
                 'status' => 'error',
-                'message' => 'No products selected yet'
+                'message' => trans('message.no-select-product')
             ]);
         }
 

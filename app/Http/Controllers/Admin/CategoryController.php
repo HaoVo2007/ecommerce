@@ -9,13 +9,11 @@ use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
-    public function viewCategory()
-    {
+    public function viewCategory() {
         return view('admin.categories.index');
     }
 
-    public function getCategory()
-    {
+    public function getCategory() {
 
         $data = Category::where('parent_id', 0)->with('children.children')->paginate(10);
 
@@ -25,8 +23,7 @@ class CategoryController extends Controller
         ]);
     }
 
-    public function loadCategory()
-    {
+    public function loadCategory() {
         $categories = Category::where('parent_id', 0)
             ->with('children.children') 
             ->get();
@@ -40,8 +37,7 @@ class CategoryController extends Controller
     /**
      * Hàm đệ quy để định dạng danh mục theo nhiều cấp
      */
-    private function formatCategories($categories, $prefix = '')
-    {
+    private function formatCategories($categories, $prefix = '') {
         $formatted = [];
 
         foreach ($categories as $category) {
@@ -62,11 +58,10 @@ class CategoryController extends Controller
 
 
 
-    public function addCategory(Request $request)
-    {
+    public function addCategory(Request $request) {
 
         $validator = Validator::make($request->all(), [
-            'name'        => 'required|string|max:255',
+            'name' => 'required|string|max:255',
         ]);
 
         if ($validator->fails()) {
