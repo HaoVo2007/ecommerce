@@ -26,10 +26,11 @@ class ProductController extends Controller
             $data = Product::with('productSizes', 'mainImage', 'subImage', 'category')
                           ->where('name', 'LIKE', '%'.$request->keyWord.'%')
                           ->paginate(5);
-        } else {
+        } else  {
             $data = Product::with('productSizes', 'mainImage', 'subImage', 'category')
-                          ->paginate(5);
-        }
+                         ->paginate(5);
+        } 
+
         return response()->json([
             'status' => 'success',
             'data' => $data,
@@ -37,11 +38,11 @@ class ProductController extends Controller
     }
 
     public function addProduct(Request $request) {
-
         $validator = Validator::make($request->all(), [
             'name'        => 'required|string|max:255',
             'price'       => 'required|numeric|min:0',
             'category'    => 'required',
+            'type'    => 'required',
             'description' => 'nullable|string',
             'mainImage'   => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
             'subImages.*' => 'image|mimes:jpeg,png,jpg,gif,webp|max:2048',
@@ -68,6 +69,7 @@ class ProductController extends Controller
                 'price' => $request->price,
                 'description' => $request->description,
                 'category_id' => $request->category,
+                'type' => $request->type,
             ]);
     
             if($request->hasFile('mainImage')) {

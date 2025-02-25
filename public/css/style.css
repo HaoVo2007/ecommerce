@@ -1,0 +1,37 @@
+/* CSS Code */
+.swiper-wrapper {
+    width: 100%;
+    height: max-content;
+    padding-bottom: 64px !important;
+    -webkit-transition-timing-function: linear !important;
+    transition-timing-function: linear !important;
+    position: relative;
+}
+.swiper-pagination-bullet {
+    background: #4f46e5;
+}
+
+.swiper-button-prev:after {
+    font-size: 15px !important;
+} 
+
+.swiper-button-next:after {
+    font-size: 15px !important;
+} 
+
+.nav-for-slider .swiper-slide {
+    height: auto;
+    width: auto;
+    cursor: pointer;
+   
+}
+
+.nav-for-slider .swiper-slide img{
+    border:2px solid transparent;
+    border-radius: 10px;
+   
+}
+.nav-for-slider .swiper-slide-thumb-active img{
+   
+    border-color: rgb(79 70 229 );
+}

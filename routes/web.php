@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Home\CategoryController as HomeCategoryController;
+use App\Http\Controllers\Home\ProductController as HomeProductController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
@@ -40,8 +42,19 @@ Route::prefix('admin')->group(function () {
     Route::get('/category', [CategoryController::class, 'getCategory']);
     Route::get('/load_category', [CategoryController::class, 'loadCategory']);
     Route::post('/category/add_category', [CategoryController::class, 'addCategory']);
-
+    Route::get('/category/{id}', [CategoryController::class, 'editCategory']);
+    Route::post('/category/update/{id}', [CategoryController::class, 'updateCategory']);
+    Route::post('/category/delete_category/{id}', [CategoryController::class, 'deleteCategory']);
+    Route::post('/category/delete_category', [CategoryController::class, 'deleteAllCategory']);
     //
+});
+
+Route::prefix('home')->group(function() {
+    Route::get('/brand', [HomeCategoryController::class, 'getBrand']);
+    // HOME PRODUCTS
+    Route::get('/product', [HomeProductController::class, 'getProduct']);
+    Route::get('/product/detail/{id}', [HomeProductController::class, 'viewDetail']);
+    //HOME PRODUCTS
 
 });
 

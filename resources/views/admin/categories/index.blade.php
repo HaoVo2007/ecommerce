@@ -14,12 +14,12 @@
         </button>
 
         <aside id="sidebar-multi-level-sidebar"
-            class="fixed top-16 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0"
+            class="fixed top-16 left-0 z-40 w-64 h-screen"
             aria-label="Sidebar">
             <div class="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
                 <ul class="space-y-2 font-medium">
                     <li>
-                        <a href="#"
+                        <a href="/admin"
                             class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                             <svg class="w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
                                 aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
@@ -29,7 +29,7 @@
                                 <path
                                     d="M12.5 0c-.157 0-.311.01-.565.027A1 1 0 0 0 11 1.02V10h8.975a1 1 0 0 0 1-.935c.013-.188.028-.374.028-.565A8.51 8.51 0 0 0 12.5 0Z" />
                             </svg>
-                            <span class="ms-3">Dashboard</span>
+                            <span class="ms-3">{{trans('message.dashboard')}}</span>
                         </a>
                     </li>
                     <li>
@@ -73,7 +73,7 @@
                                 <path stroke-linecap="round" stroke-linejoin="round"
                                     d="M3.75 6A2.25 2.25 0 0 1 6 3.75h2.25A2.25 2.25 0 0 1 10.5 6v2.25a2.25 2.25 0 0 1-2.25 2.25H6a2.25 2.25 0 0 1-2.25-2.25V6ZM3.75 15.75A2.25 2.25 0 0 1 6 13.5h2.25a2.25 2.25 0 0 1 2.25 2.25V18a2.25 2.25 0 0 1-2.25 2.25H6A2.25 2.25 0 0 1 3.75 18v-2.25ZM13.5 6a2.25 2.25 0 0 1 2.25-2.25H18A2.25 2.25 0 0 1 20.25 6v2.25A2.25 2.25 0 0 1 18 10.5h-2.25a2.25 2.25 0 0 1-2.25-2.25V6ZM13.5 15.75a2.25 2.25 0 0 1 2.25-2.25H18a2.25 2.25 0 0 1 2.25 2.25V18A2.25 2.25 0 0 1 18 20.25h-2.25A2.25 2.25 0 0 1 13.5 18v-2.25Z" />
                             </svg>
-                            <span class="flex-1 ms-3 whitespace-nowrap">Category</span>
+                            <span class="flex-1 ms-3 whitespace-nowrap">{{trans('message.category')}}</span>
                         </a>
                     </li>
                     <li>
@@ -93,7 +93,7 @@
                                 <path d="M15 6V4.5C15 3.67157 14.3284 3 13.5 3C12.6716 3 12 3.67157 12 4.5V6H15Z"
                                     stroke="black" stroke-width="null" class="my-path"></path>
                             </svg>
-                            <span class="flex-1 ms-3 whitespace-nowrap">Products</span>
+                            <span class="flex-1 ms-3 whitespace-nowrap">{{trans('message.product')}}</span>
                         </a>
                     </li>
                     <li>
@@ -140,7 +140,7 @@
                     class="relative top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white rounded-lg shadow-xl w-1/2 p-10">
                     <div class="flex w-full items-center rounded-full">
                         <div class="flex-1 border-b border-gray-300"></div>
-                        <span class="text-black text-lg font-semibold leading-8 px-8 py-3 uppercase">{{trans('message.add-category')}}</span>
+                        <span id="text-modal" class="text-black text-lg font-semibold leading-8 px-8 py-3 uppercase">{{trans('message.add-category')}}</span>
                         <div class="flex-1 border-b border-gray-300"></div>
                     </div>
 
@@ -160,9 +160,35 @@
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                             </select>
                         </div>
+
+                        <div class="mb-3">
+                            <div class="">
+                                <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                                    for="main_image">{{trans('message.main-image')}}</label>
+                                <label>
+                                    <div
+                                        class="mb-5 w-full h-11 rounded-3xl border border-gray-300 justify-between items-center inline-flex">
+                                        <h2 class="text-gray-900/20 text-sm font-normal leading-snug pl-4">No file
+                                            chosen</h2>
+                                        <input type="file" hidden id="main_image" />
+                                        <div
+                                            class="flex w-28 h-11 px-2 flex-col bg-indigo-600 rounded-r-3xl shadow text-white text-xs font-semibold leading-4 
+                                                                           items-center justify-center cursor-pointer focus:outline-none">
+                                            Choose File </div>
+                                    </div>
+                                </label>
+                            </div>
+                            <div class="mb-2">
+                                <div class="w-full flex items-center justify-center" id="main-image-preview">
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <input type="hidden" id="idCategory">
                     </div>
 
-                    <div class="flex items-center justify-end p-4 border-t">
+                    <div class="flex items-center justify-end border-t">
                         <button type="button" id="close-modal"
                             class="flex justify-center items-center gap-2 text-yellow-700 hover:text-white border border-yellow-700 hover:bg-yellow-800 focus:ring-4 focus:outline-none focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-yellow-500 dark:text-yellow-500 dark:hover:text-white dark:hover:bg-yellow-500 dark:focus:ring-yellow-800">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -208,8 +234,7 @@
                     <div class="flex items-center justify-end rounded dark:bg-gray-800">
                         <button type="button" id="btn-modal"
                             class="modal-button flex justify-center items-center gap-2 text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800"
-                            data-pd-overlay="#static-backdrop-modal" data-modal-target="static-backdrop-modal"
-                            data-modal-toggle="static-backdrop-modal">
+                            >
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                 stroke-width="1.5" stroke="currentColor" class="size-6">
                                 <path stroke-linecap="round" stroke-linejoin="round"
@@ -239,7 +264,7 @@
                                             <th class="">
                                                 <div class="flex items-center py-5 px-5 ">
                                                     <input id="checkbox-all" type="checkbox" value=""
-                                                        class="w-5 h-5 appearance-none border border-gray-300  rounded-md mr-2 hover:border-indigo-500 hover:bg-indigo-100 checked:bg-no-repeat checked:bg-center checked:border-indigo-500 checked:bg-indigo-100">
+                                                        class="checked:bg-[length:12px_12px] w-5 h-5 appearance-none border border-gray-300  rounded-md mr-2 hover:border-indigo-500 hover:bg-indigo-100 checked:bg-no-repeat checked:bg-center checked:border-indigo-500 checked:bg-indigo-100">
                                                 </div>
                                             </th>
                                             <th scope="col"
@@ -277,6 +302,42 @@
             loadCategory();
             let tableContainer = '';
             let keyWord;
+            let oldImageCategory = null;
+            $('#main_image').on('change', function(e) {
+
+                let mainImage = e.target.files[0];
+                const previewContainer = $('#main-image-preview');
+                previewContainer.empty();
+                const reader = new FileReader();
+
+                reader.onload = function(e) {
+
+                    const imageWrapper = $('<div>')
+                    .addClass('relative inline-block');
+
+                    const img = $('<img>')
+                        .attr('src', e.target.result)
+                        .addClass('h-40 w-auto object-cover mt-2 mr-2 rounded-lg');
+                    
+                    const removeButton = $('<div>')
+                        .addClass('absolute top-0 right-0 bg-black rounded-full p-1 cursor-pointer')
+                        .html(`
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 text-white">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+                            </svg>
+                        `)
+                        .on('click', function() {
+                            imageWrapper.remove();
+                            $('#main_image').val('');
+                        });
+                    
+                    imageWrapper.append(img).append(removeButton);
+                    previewContainer.append(imageWrapper);
+                };
+
+                reader.readAsDataURL(mainImage);
+
+                })
 
             function renderCategoryRow(category, level = 0) {
                 let indent = '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'.repeat(level); // Thụt lề theo cấp bậc
@@ -284,7 +345,7 @@
                     <tr class="bg-white transition-all duration-500 hover:bg-gray-50">
                         <td class="">
                             <div class="flex items-center py-5 px-5">
-                                <input type="checkbox" value="${category.id}" class="checkbox-item w-5 h-5 appearance-none border border-gray-300 rounded-md mr-2 hover:border-indigo-500 hover:bg-indigo-100 checked:bg-no-repeat checked:bg-center checked:border-indigo-500 checked:bg-indigo-100">
+                                <input type="checkbox" value="${category.id}" class="checked:bg-[length:12px_12px] checkbox-item w-5 h-5 appearance-none border border-gray-300 rounded-md mr-2 hover:border-indigo-500 hover:bg-indigo-100 checked:bg-no-repeat checked:bg-center checked:border-indigo-500 checked:bg-indigo-100">
                             </div>
                         </td>
                         <td class="p-5 whitespace-nowrap text-sm leading-6 font-medium text-gray-900">${indent}${category.name}</td>
@@ -296,12 +357,12 @@
                             </div>
                         </td>
                         <td class="flex p-5 items-center gap-0.5">
-                                                <button class="p-2  rounded-full bg-white group transition-all duration-500 hover:bg-indigo-600 flex item-center">
-                                                    <a href="/admin/category/edit_category/${category.id}">
+                                                <button data-id="${category.id}" id="btn-edit" class="p-2  rounded-full bg-white group transition-all duration-500 hover:bg-indigo-600 flex item-center">
+                                                    <span>
                                                         <svg class="cursor-pointer" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                             <path class="fill-indigo-500 group-hover:fill-white" d="M9.53414 8.15675L8.96459 7.59496L8.96459 7.59496L9.53414 8.15675ZM13.8911 3.73968L13.3215 3.17789V3.17789L13.8911 3.73968ZM16.3154 3.75892L15.7367 4.31126L15.7367 4.31127L16.3154 3.75892ZM16.38 3.82658L16.9587 3.27423L16.9587 3.27423L16.38 3.82658ZM16.3401 6.13595L15.7803 5.56438L16.3401 6.13595ZM11.9186 10.4658L12.4784 11.0374L11.9186 10.4658ZM11.1223 10.9017L10.9404 10.1226V10.1226L11.1223 10.9017ZM9.07259 10.9951L8.52556 11.5788L8.52556 11.5788L9.07259 10.9951ZM9.09713 8.9664L9.87963 9.1328V9.1328L9.09713 8.9664ZM9.05721 10.9803L8.49542 11.5498H8.49542L9.05721 10.9803ZM17.1679 4.99458L16.368 4.98075V4.98075L17.1679 4.99458ZM15.1107 2.8693L15.1171 2.06932L15.1107 2.8693ZM9.22851 8.51246L8.52589 8.12992L8.52452 8.13247L9.22851 8.51246ZM9.22567 8.51772L8.52168 8.13773L8.5203 8.1403L9.22567 8.51772ZM11.5684 10.7654L11.9531 11.4668L11.9536 11.4666L11.5684 10.7654ZM11.5669 10.7662L11.9507 11.4681L11.9516 11.4676L11.5669 10.7662ZM11.3235 3.30005C11.7654 3.30005 12.1235 2.94188 12.1235 2.50005C12.1235 2.05822 11.7654 1.70005 11.3235 1.70005V3.30005ZM18.3 9.55887C18.3 9.11705 17.9418 8.75887 17.5 8.75887C17.0582 8.75887 16.7 9.11705 16.7 9.55887H18.3ZM3.47631 16.5237L4.042 15.9581H4.042L3.47631 16.5237ZM16.5237 16.5237L15.958 15.9581L15.958 15.9581L16.5237 16.5237ZM10.1037 8.71855L14.4606 4.30148L13.3215 3.17789L8.96459 7.59496L10.1037 8.71855ZM15.7367 4.31127L15.8013 4.37893L16.9587 3.27423L16.8941 3.20657L15.7367 4.31127ZM15.7803 5.56438L11.3589 9.89426L12.4784 11.0374L16.8998 6.70753L15.7803 5.56438ZM10.9404 10.1226C10.3417 10.2624 9.97854 10.3452 9.72166 10.3675C9.47476 10.3888 9.53559 10.3326 9.61962 10.4113L8.52556 11.5788C8.9387 11.966 9.45086 11.9969 9.85978 11.9615C10.2587 11.9269 10.7558 11.8088 11.3042 11.6807L10.9404 10.1226ZM8.31462 8.8C8.19986 9.33969 8.09269 9.83345 8.0681 10.2293C8.04264 10.6393 8.08994 11.1499 8.49542 11.5498L9.619 10.4107C9.70348 10.494 9.65043 10.5635 9.66503 10.3285C9.6805 10.0795 9.75378 9.72461 9.87963 9.1328L8.31462 8.8ZM9.61962 10.4113C9.61941 10.4111 9.6192 10.4109 9.619 10.4107L8.49542 11.5498C8.50534 11.5596 8.51539 11.5693 8.52556 11.5788L9.61962 10.4113ZM15.8013 4.37892C16.0813 4.67236 16.2351 4.83583 16.3279 4.96331C16.4073 5.07234 16.3667 5.05597 16.368 4.98075L17.9678 5.00841C17.9749 4.59682 17.805 4.27366 17.6213 4.02139C17.451 3.78756 17.2078 3.53522 16.9587 3.27423L15.8013 4.37892ZM16.8998 6.70753C17.1578 6.45486 17.4095 6.21077 17.5876 5.98281C17.7798 5.73698 17.9607 5.41987 17.9678 5.00841L16.368 4.98075C16.3693 4.90565 16.4103 4.8909 16.327 4.99749C16.2297 5.12196 16.0703 5.28038 15.7803 5.56438L16.8998 6.70753ZM14.4606 4.30148C14.7639 3.99402 14.9352 3.82285 15.0703 3.71873C15.1866 3.62905 15.1757 3.66984 15.1044 3.66927L15.1171 2.06932C14.6874 2.06591 14.3538 2.25081 14.0935 2.45151C13.8518 2.63775 13.5925 2.9032 13.3215 3.17789L14.4606 4.30148ZM16.8941 3.20657C16.6279 2.92765 16.373 2.65804 16.1345 2.46792C15.8774 2.26298 15.5468 2.07273 15.1171 2.06932L15.1044 3.66927C15.033 3.66871 15.0226 3.62768 15.1372 3.71904C15.2704 3.82522 15.4387 3.999 15.7367 4.31126L16.8941 3.20657ZM8.96459 7.59496C8.82923 7.73218 8.64795 7.90575 8.5259 8.12993L9.93113 8.895C9.92075 8.91406 9.91465 8.91711 9.93926 8.88927C9.97002 8.85445 10.0145 8.80893 10.1037 8.71854L8.96459 7.59496ZM9.87963 9.1328C9.9059 9.00925 9.91925 8.94785 9.93124 8.90366C9.94073 8.86868 9.94137 8.87585 9.93104 8.89515L8.5203 8.1403C8.39951 8.36605 8.35444 8.61274 8.31462 8.8L9.87963 9.1328ZM8.52452 8.13247L8.52168 8.13773L9.92967 8.89772L9.9325 8.89246L8.52452 8.13247ZM11.3589 9.89426C11.27 9.98132 11.2252 10.0248 11.1909 10.055C11.1635 10.0791 11.1658 10.0738 11.1832 10.0642L11.9536 11.4666C12.1727 11.3462 12.3427 11.1703 12.4784 11.0374L11.3589 9.89426ZM11.3042 11.6807C11.4912 11.6371 11.7319 11.5878 11.9507 11.4681L11.1831 10.0643C11.2007 10.0547 11.206 10.0557 11.1697 10.0663C11.1248 10.0793 11.0628 10.0941 10.9404 10.1226L11.3042 11.6807ZM11.1837 10.064L11.1822 10.0648L11.9516 11.4676L11.9531 11.4668L11.1837 10.064ZM16.399 6.10097L13.8984 3.60094L12.7672 4.73243L15.2677 7.23246L16.399 6.10097ZM10.8333 16.7001H9.16667V18.3001H10.8333V16.7001ZM3.3 10.8334V9.16672H1.7V10.8334H3.3ZM9.16667 3.30005H11.3235V1.70005H9.16667V3.30005ZM16.7 9.55887V10.8334H18.3V9.55887H16.7ZM9.16667 16.7001C7.5727 16.7001 6.45771 16.6984 5.61569 16.5851C4.79669 16.475 4.35674 16.2728 4.042 15.9581L2.91063 17.0894C3.5722 17.751 4.40607 18.0369 5.4025 18.1709C6.37591 18.3018 7.61793 18.3001 9.16667 18.3001V16.7001ZM1.7 10.8334C1.7 12.3821 1.6983 13.6241 1.82917 14.5976C1.96314 15.594 2.24905 16.4279 2.91063 17.0894L4.042 15.9581C3.72726 15.6433 3.52502 15.2034 3.41491 14.3844C3.3017 13.5423 3.3 12.4273 3.3 10.8334H1.7ZM10.8333 18.3001C12.3821 18.3001 13.6241 18.3018 14.5975 18.1709C15.5939 18.0369 16.4278 17.751 17.0894 17.0894L15.958 15.9581C15.6433 16.2728 15.2033 16.475 14.3843 16.5851C13.5423 16.6984 12.4273 16.7001 10.8333 16.7001V18.3001ZM16.7 10.8334C16.7 12.4274 16.6983 13.5423 16.5851 14.3844C16.475 15.2034 16.2727 15.6433 15.958 15.9581L17.0894 17.0894C17.7509 16.4279 18.0369 15.594 18.1708 14.5976C18.3017 13.6241 18.3 12.3821 18.3 10.8334H16.7ZM3.3 9.16672C3.3 7.57275 3.3017 6.45776 3.41491 5.61574C3.52502 4.79674 3.72726 4.35679 4.042 4.04205L2.91063 2.91068C2.24905 3.57225 1.96314 4.40612 1.82917 5.40255C1.6983 6.37596 1.7 7.61798 1.7 9.16672H3.3ZM9.16667 1.70005C7.61793 1.70005 6.37591 1.69835 5.4025 1.82922C4.40607 1.96319 3.5722 2.24911 2.91063 2.91068L4.042 4.04205C4.35674 3.72731 4.79669 3.52507 5.61569 3.41496C6.45771 3.30175 7.5727 3.30005 9.16667 3.30005V1.70005Z" fill="#818CF8"></path>
                                                         </svg>
-                                                    </a>
+                                                    </span>
                                                 </button>
                                                 <button data-id="${category.id}" id="btn-delete" class="p-2 rounded-full bg-white group transition-all duration-500 hover:bg-red-600 flex item-center">
                                                     <svg class="" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -315,7 +376,7 @@
                                                 </button>
                                             </td>
                     </tr>
-    `;
+                    `;
 
                 $('#table-container').append(row);
 
@@ -352,6 +413,58 @@
                 });
             }
 
+            $(document).on('click', '#btn-edit', function() {
+
+                $('#text-modal').text('{{trans('message.update-category')}}');
+                let id = $(this).data('id');
+                $('#idCategory').val(id);
+                $('#main-image-preview').empty();
+
+                $.ajax({
+                    url: `/admin/category/${id}`,
+                    method: 'GET',
+                    success: function(response) {
+                        if (response.status == 'success') {
+
+                            $('#nameCategory').val(response.data.name);
+
+                            let parentData = response.data.parent;
+                            oldImageCategory = response.data.image_url;
+                            if (oldImageCategory) {
+                                const mainImageWrapper = $('<div>').addClass('relative inline-block');
+                                const mainImg = $('<img>')
+                                    .attr('src', `/storage/${oldImageCategory}`)
+                                    .addClass('h-40 w-auto object-cover mt-2 mr-2 rounded-lg');
+                                const removeButton = $('<div>')
+                                    .addClass('absolute top-0 right-0 bg-black rounded-full p-1 cursor-pointer')
+                                    .html(`
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 text-white">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+                                        </svg>
+                                    `)
+                                    .on('click', function() {
+                                        mainImageWrapper.remove();
+                                        oldImageCategory = null; 
+                                    });
+
+                                mainImageWrapper.append(mainImg).append(removeButton);
+                                $('#main-image-preview').append(mainImageWrapper);
+                            }
+                             
+                            if (parentData) {
+                                $('#parentCategory').empty();
+                                let newOption = new Option(parentData.name, parentData.id, true, true);
+                                $('#parentCategory').append(newOption).trigger('change');
+                            } else {
+                                $('#parentCategory').val(null).trigger('change');
+                            }
+
+                            $('#static-backdrop-modal').show();
+                        }
+                    }
+                });
+            });
+
 
             $('#parentCategory').select2({
                 ajax: {
@@ -378,15 +491,24 @@
             });
 
             $('#btn-modal').on('click', function() {
-                $('#static-backdrop-modal').removeClass('hidden');
+                $('#text-modal').text('{{trans('message.add-category')}}');
+                $('#static-backdrop-modal').show();
             });
 
             $('#btn-save').on('click', function() {
                 let goodJob = `{{ trans('message.good-job') }}`;
-                let error = `{{ trans('message.error') }}`;
+                let Error = `{{ trans('message.error') }}`;
                 let wentWrong = `{{ trans('message.went-wrong') }}`;
                 let name = $('#nameCategory').val();
                 let parentId = $('#parentCategory').val();
+                let categoryId = $('#idCategory').val();
+                let url = categoryId ? `/admin/category/update/${categoryId}` : '/admin/category/add_category'; 
+                let formData = new FormData();
+                console.log(url);
+                formData.append('_token', $('meta[name="csrf-token"]').attr('content'));
+                formData.append('name', name);
+                formData.append('parentId', parentId);
+                formData.append('imageCategory', $('#main_image')[0].files[0]);
 
                 let button = $('#btn-save');
                 button.prop('disabled', true).html(`
@@ -397,13 +519,11 @@
                         {{trans('message.loading')}}
                     `);
                 $.ajax({
-                    url: '/admin/category/add_category',
+                    url: url,
                     method: 'POST',
-                    data: {
-                        _token: $('meta[name="csrf-token"]').attr('content'),
-                        name: name,
-                        parentId: parentId,
-                    },
+                    data: formData,
+                    contentType: false,
+                    processData: false,
                     success: function(response) {
                         swal(goodJob, response.message, response.status)
                             .then(() => {
@@ -425,7 +545,10 @@
             })
 
             $('#close-modal').on('click', function() {
-                $('#static-backdrop-modal').addClass('hidden');
+                $('#static-backdrop-modal').hide();
+                $('#idCategory').val('');
+                $('#nameCategory').val('');
+                $('#parentCategory').val(null).trigger('change');
             });
 
             $('#static-backdrop-modal').on('click', function(e) {
@@ -440,10 +563,13 @@
 
             $('#btn-search').on('click', function() {
                 keyWord = $('#key-word').val();
-                loadProduct(1, keyWord);
+                loadCategory(1, keyWord);
             })
 
             $('#btn-delete-all').on('click', function() {
+                let goodJob = `{{ trans('message.good-job') }}`;
+                let Error = `{{ trans('message.error') }}`;
+                let wentWrong = `{{ trans('message.went-wrong') }}`;
                 let checkedIds = [];
                 $('.checkbox-item:checked').each(function() {
                     checkedIds.push($(this).val());
@@ -452,8 +578,8 @@
                 let button = $('#btn-delete-all');
 
                 swal({
-                    title: "Are you sure?",
-                    text: "Once deleted, you will not be able to recover this imaginary file!",
+                    title: "{{trans('message.are-you-sure')}}",
+                    text: "{{trans('message.delete-all-children')}}",
                     icon: "warning",
                     buttons: true,
                     dangerMode: true,
@@ -464,12 +590,13 @@
                             <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"/>
                             <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="#1C64F2"/>
                         </svg>
-                        Loading...
+                        {{trans('message.loading')}}
+
                     `);
 
                     if (willDelete) {
                         $.ajax({
-                            url: '/admin/product/delete_product',
+                            url: '/admin/category/delete_category',
                             method: 'POST',
                             data: {
                                 checkedIds: checkedIds,
@@ -477,15 +604,15 @@
                             },
                             success: function(response) {
                                 if (response.status == 'success') {
-                                    swal("Good job!", response.message, response
+                                    swal(goodJob, response.message, response
                                         .status);
-                                    loadProduct();
+                                    loadCategory();
                                 } else {
-                                    swal("Error!", "Something went wrong!", "error");
+                                    swal(Error, wentWrong, "error");
                                 }
                             },
                             error: function() {
-                                swal("Error!", "Something went wrong with the request!",
+                                swal(Error, wentWrong,
                                     "error");
                             },
                             complete: function() {
@@ -493,13 +620,18 @@
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
                                     </svg>
-                                    Delete
+                                    {{trans('message.delete')}}
                                 `);
                             }
                         });
                     } else {
-                        swal("Your imaginary file is safe!");
-                        button.prop('disabled', false).html('Delete');
+                        swal(`{{ trans('message.safe') }}`);
+                        button.prop('disabled', false).html(`
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                                    </svg>
+                                    {{ trans('message.delete') }}
+                        `);
                     }
                 });
             });
@@ -548,17 +680,19 @@
             $(document).on('click', '.pagination-link', function() {
                 const page = $(this).data('page');
                 if (page) {
-                    loadProduct(page, keyWord);
+                    loadCategory(page, keyWord);
                 }
             });
 
             $(document).on('click', '#btn-delete', function() {
 
-                let productId = $(this).data('id');
-
+                let categoryId = $(this).data('id');
+                let goodJob = `{{ trans('message.good-job') }}`;
+                let Error = `{{ trans('message.error') }}`;
+                let wentWrong = `{{ trans('message.went-wrong') }}`;
                 swal({
-                        title: "Are you sure?",
-                        text: "Once deleted, you will not be able to recover this imaginary file!",
+                        title: "{{trans('message.are-you-sure')}}",
+                        text: "{{trans('message.delete-all-children')}}",
                         icon: "warning",
                         buttons: true,
                         dangerMode: true,
@@ -566,23 +700,23 @@
                     .then((willDelete) => {
                         if (willDelete) {
                             $.ajax({
-                                url: `/admin/product/delete_product/${productId}`,
+                                url: `/admin/category/delete_category/${categoryId}`,
                                 method: 'POST',
                                 data: {
                                     _token: $('meta[name="csrf-token"]').attr('content')
                                 },
                                 success: function(response) {
                                     if (response.status == 'success') {
-                                        swal("Good job!", response.message, response
+                                        swal(goodJob, response.message, response
                                             .status);
-                                        loadProduct();
+                                        loadCategory();
                                     } else {
-                                        swal("Error!", "Something went wrong!", "error");
+                                        swal(Error, wentWrong, "error");
                                     }
                                 }
                             })
                         } else {
-                            swal("Your imaginary file is safe!");
+                            swal(`{{ trans('message.safe') }}`);
                         }
                     });
             });

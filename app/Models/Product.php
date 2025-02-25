@@ -15,6 +15,7 @@ class Product extends Model
         'price',
         'status',
         'category_id',
+        'type',
     ];
 
     public function productSizes() {

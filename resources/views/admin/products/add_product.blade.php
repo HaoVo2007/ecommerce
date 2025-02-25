@@ -130,12 +130,12 @@
         </button>
 
         <aside id="sidebar-multi-level-sidebar"
-            class="fixed top-16 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0"
+            class="fixed top-16 left-0 z-40 w-64 h-screen"
             aria-label="Sidebar">
             <div class="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
                 <ul class="space-y-2 font-medium">
                     <li>
-                        <a href="admin/product/view"
+                        <a href="/admin"
                             class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                             <svg class="w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
                                 aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
@@ -145,7 +145,7 @@
                                 <path
                                     d="M12.5 0c-.157 0-.311.01-.565.027A1 1 0 0 0 11 1.02V10h8.975a1 1 0 0 0 1-.935c.013-.188.028-.374.028-.565A8.51 8.51 0 0 0 12.5 0Z" />
                             </svg>
-                            <span class="ms-3">Dashboard</span>
+                            <span class="ms-3">{{trans('message.dashboard')}}</span>
                         </a>
                     </li>
                     <li>
@@ -187,7 +187,7 @@
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6A2.25 2.25 0 0 1 6 3.75h2.25A2.25 2.25 0 0 1 10.5 6v2.25a2.25 2.25 0 0 1-2.25 2.25H6a2.25 2.25 0 0 1-2.25-2.25V6ZM3.75 15.75A2.25 2.25 0 0 1 6 13.5h2.25a2.25 2.25 0 0 1 2.25 2.25V18a2.25 2.25 0 0 1-2.25 2.25H6A2.25 2.25 0 0 1 3.75 18v-2.25ZM13.5 6a2.25 2.25 0 0 1 2.25-2.25H18A2.25 2.25 0 0 1 20.25 6v2.25A2.25 2.25 0 0 1 18 10.5h-2.25a2.25 2.25 0 0 1-2.25-2.25V6ZM13.5 15.75a2.25 2.25 0 0 1 2.25-2.25H18a2.25 2.25 0 0 1 2.25 2.25V18A2.25 2.25 0 0 1 18 20.25h-2.25A2.25 2.25 0 0 1 13.5 18v-2.25Z" />
                             </svg>
-                            <span class="flex-1 ms-3 whitespace-nowrap">Category</span>
+                            <span class="flex-1 ms-3 whitespace-nowrap">{{trans('message.category')}}</span>
                         </a>
                     </li>
                     <li>
@@ -199,7 +199,7 @@
                                 <path d="M12 6V4.5C12 3.67157 11.3284 3 10.5 3C9.67157 3 9 3.67157 9 4.5V6H12Z" stroke="black" stroke-width="null" class="my-path"></path>
                                 <path d="M15 6V4.5C15 3.67157 14.3284 3 13.5 3C12.6716 3 12 3.67157 12 4.5V6H15Z" stroke="black" stroke-width="null" class="my-path"></path>
                             </svg>
-                            <span class="flex-1 ms-3 whitespace-nowrap">Products</span>
+                            <span class="flex-1 ms-3 whitespace-nowrap">{{trans('message.product')}}</span>
                         </a>
                     </li>
                     <li>
@@ -286,11 +286,20 @@
 
                             <div class="mb-3">
                                 <label for="category"
-                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{trans('message.category')}}</label>
-                                <select id="categoryProduct"
+                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{trans('message.parent-category')}}</label>
+                                <select id="parentCategory"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                    <option selected>Choose a country</option>
-                                    <option value="1">United States</option>
+                                </select>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="category"
+                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{trans('message.category')}}</label>
+                                <select id="typeProduct" data-placeholder="{{trans('message.select-type')}}"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                    <option selected></option>
+                                    <option value="1">{{trans('message.at-base')}}</option>
+                                    <option value="2">{{trans('message.tf-base')}}</option>
                                 </select>
                             </div>
                         </div>
@@ -479,6 +488,45 @@
                 $('#sub_image')[0].files = dataTransfer.files;
             }
 
+            $('#parentCategory').select2({
+                ajax: {
+                    url: '/admin/load_category',
+                    dataType: 'json',
+                    delay: 250,
+                    processResults: function(data) {
+                        return {
+                            results: data
+                        };
+                    },
+                    cache: true
+                },
+                placeholder: '{{trans('message.select-category')}}',
+                allowClear: true,
+                language: {
+                    searching: function() {
+                        return '{{trans('message.loading')}}';
+                    },
+                    noResults: function() {
+                        return '{{trans('message.no-result')}}';
+                    }
+                }
+            });
+
+            $('#typeProduct').select2({
+                width: '100%',
+                placeholder: $('#typeProduct').data('placeholder'), // Lấy placeholder từ data-placeholder
+                allowClear: true,
+                language: {
+                    searching: function() {
+                        return '{{trans('message.loading')}}';
+                    },
+                    noResults: function() {
+                        return '{{trans('message.no-result')}}';
+                    }
+                }
+            });
+
+
             $('#btn-save').on('click', function() {
                 let goodJob = `{{ trans('message.good-job') }}`;
                 let Error = `{{ trans('message.error') }}`;
@@ -496,9 +544,9 @@
                 formData.append('name', $('#nameProduct').val());
                 formData.append('price', $('#priceProduct').val());
                 formData.append('description', editorInstance.getData());
-                formData.append('category', $('#categoryProduct').val());
-
-                formData.append('mainImage', $('#main_image')[0].files[0]);;
+                formData.append('type', $('#typeProduct').val());
+                formData.append('category', $('#parentCategory').val());
+                formData.append('mainImage', $('#main_image')[0].files[0]);
 
                 for (let i = 0; i < selectedFiles.length; i++) {
                     formData.append('subImages[]', selectedFiles[i]);
