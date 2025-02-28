@@ -1,5 +1,5 @@
 <x-app-layout>
-    <section class="py-24 bg-white">
+    <section class=" mt-10 py-12 bg-white">
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 lg:grid-cols-2">
                 <div class="slider-box w-full h-full max-lg:mx-auto mx-0 p-10">
@@ -8,7 +8,7 @@
                             @foreach ($data->subImage as $item)
                                 <div class="swiper-slide">
                                     <div class="block">
-                                        <img src="/storage/{{$item->image_url}}"
+                                        <img src="/storage/{{ $item->image_url }}"
                                             class="max-lg:mx-auto rounded-2xl object-cover">
                                     </div>
                                 </div>
@@ -19,7 +19,7 @@
                         <div class="swiper-wrapper">
                             @foreach ($data->subImage as $item)
                                 <div class="swiper-slide thumbs-slide">
-                                    <img src="/storage/{{$item->image_url}}"
+                                    <img src="/storage/{{ $item->image_url }}"
                                         class="max-lg:mx-auto rounded-2xl object-cover">
                                 </div>
                             @endforeach
@@ -31,9 +31,9 @@
                         <div class="flex items-center justify-between gap-6 mb-6">
                             <div class="text">
                                 <h2 class="font-manrope font-bold text-3xl leading-10 text-gray-900 mb-2">
-                                    {{$data->name}}
+                                    {{ $data->name }}
                                 </h2>
-                                <p class="font-normal text-base text-gray-500">{{$data->category->name}}</p>
+                                <p class="font-normal text-base text-gray-500">{{ $data->category->name }}</p>
                             </div>
                             <button class="group transition-all duration-500 p-0.5">
                                 <svg width="60" height="60" viewBox="0 0 60 60" fill="none"
@@ -52,7 +52,8 @@
 
                         <div class="flex flex-col min-[400px]:flex-row min-[400px]:items-center mb-8 gap-y-3">
                             <div class="flex items-center">
-                                <h5 class="font-manrope font-semibold text-2xl leading-9 text-gray-900 ">{{$data->price}}</h5>
+                                <h5 class="font-manrope font-semibold text-2xl leading-9 text-gray-900 ">
+                                    {{ $data->price }}</h5>
                                 <span class="ml-3 font-semibold text-lg text-indigo-600">30% off</span>
                             </div>
                             <svg class="mx-5 max-[400px]:hidden" xmlns="http://www.w3.org/2000/svg" width="2"
@@ -81,19 +82,19 @@
                                         </clipPath>
                                     </defs>
                                 </svg>
-                                <span class="text-base font-medium text-white">4.8</span>
+                                <span class="text-base font-medium text-white">{{ $avgReview }}</span>
                             </button>
                         </div>
-                        <p class="font-medium text-lg text-gray-900 mb-4">{{trans('message.size')}}</p>
+                        <p class="font-medium text-lg text-gray-900 mb-4">{{ trans('message.size') }}</p>
                         <div class="grid grid-cols-2 min-[400px]:grid-cols-4 gap-3 mb-3 min-[400px]:mb-8">
                             @foreach ($data->productSizes as $item)
                                 <button
-                                class="border border-gray-200 whitespace-nowrap text-gray-900 text-sm leading-6 py-2.5 rounded-full px-5 text-center w-full font-semibold shadow-sm shadow-transparent transition-all duration-300 hover:bg-gray-50 hover:shadow-gray-300">{{$item->size}}</button>
+                                    class="border border-gray-200 whitespace-nowrap text-gray-900 text-sm leading-6 py-2.5 rounded-full px-5 text-center w-full font-semibold shadow-sm shadow-transparent transition-all duration-300 hover:bg-gray-50 hover:shadow-gray-300">{{ $item->size }}</button>
                             @endforeach
                         </div>
                         <div class="flex items-center flex-col min-[400px]:flex-row gap-3 mb-3 min-[400px]:mb-8">
                             <div class=" flex items-center justify-center border border-gray-400 rounded-full">
-                                <button
+                                <button id="btn-decrease"
                                     class="group py-[14px] px-3 w-full border-r border-gray-400 rounded-l-full h-full flex items-center justify-center bg-white shadow-sm shadow-transparent transition-all duration-300 hover:bg-gray-50 hover:shadow-gray-300">
                                     <svg class="stroke-black group-hover:stroke-black" width="22" height="22"
                                         viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -105,10 +106,10 @@
                                             stroke-linecap="round" />
                                     </svg>
                                 </button>
-                                <input type="text"
-                                    class="font-semibold text-gray-900 text-lg py-3 px-2 w-full min-[400px]:min-w-[75px] h-full bg-transparent placeholder:text-gray-900 text-center hover:text-indigo-600 outline-0 hover:placeholder:text-indigo-600"
-                                    placeholder="1">
-                                <button
+                                <input type="number" id="quantity"
+                                    class="appearance-none font-semibold text-gray-900 text-lg py-3 px-2 w-full min-[400px]:min-w-[75px] h-full bg-transparent placeholder:text-gray-900 text-center hover:text-indigo-600 outline-0 hover:placeholder:text-indigo-600"
+                                    min="1" value="1">
+                                <button id="btn-increase"
                                     class="group py-[14px] px-3 w-full border-l border-gray-400 rounded-r-full h-full flex items-center justify-center bg-white shadow-sm shadow-transparent transition-all duration-300 hover:bg-gray-50 hover:shadow-gray-300">
                                     <svg class="stroke-black group-hover:stroke-black" width="22" height="22"
                                         viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -121,7 +122,7 @@
                                     </svg>
                                 </button>
                             </div>
-                            <button
+                            <button id="btn-add-cart"
                                 class="group py-3 px-5 rounded-full bg-indigo-50 text-indigo-600 font-semibold text-lg w-full flex items-center justify-center gap-2 shadow-sm shadow-transparent transition-all duration-500 hover:shadow-indigo-300 hover:bg-indigo-100">
                                 <svg class="stroke-indigo-600 transition-all duration-500 group-hover:stroke-indigo-600"
                                     width="22" height="22" viewBox="0 0 22 22" fill="none"
@@ -130,146 +131,392 @@
                                         d="M10.7394 17.875C10.7394 18.6344 10.1062 19.25 9.32511 19.25C8.54402 19.25 7.91083 18.6344 7.91083 17.875M16.3965 17.875C16.3965 18.6344 15.7633 19.25 14.9823 19.25C14.2012 19.25 13.568 18.6344 13.568 17.875M4.1394 5.5L5.46568 12.5908C5.73339 14.0221 5.86724 14.7377 6.37649 15.1605C6.88573 15.5833 7.61377 15.5833 9.06984 15.5833H15.2379C16.6941 15.5833 17.4222 15.5833 17.9314 15.1605C18.4407 14.7376 18.5745 14.0219 18.8421 12.5906L19.3564 9.84059C19.7324 7.82973 19.9203 6.8243 19.3705 6.16215C18.8207 5.5 17.7979 5.5 15.7522 5.5H4.1394ZM4.1394 5.5L3.66797 2.75"
                                         stroke="" stroke-width="1.6" stroke-linecap="round" />
                                 </svg>
-                                Add to cart</button>
+                                {{trans('message.add-to-cart')}}
+                            </button>
                         </div>
                         <button
                             class="text-center w-full px-5 py-4 rounded-[100px] bg-indigo-600 flex items-center justify-center font-semibold text-lg text-white shadow-sm shadow-transparent transition-all duration-500 hover:bg-indigo-700 hover:shadow-indigo-300">
-                            Buy Now
+                            {{trans('message.buy-now')}}
                         </button>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
-    <section class="bg-white">
-        <div class="pl-[150px] pr-[150px]">
-            <div class="flex w-full items-center rounded-full pb-10">
-                <div class="flex-1 border-b border-gray-300 ml-10"></div>
-                <span class="text-black text-3xl font-semibold leading-8 px-8 py-3 uppercase">{{trans('message.review-product')}}</span>
-                <div class="flex-1 border-b border-gray-300 mr-10"></div>
-            </div>
-            <div class="flex items-start gap-10 w-full">
-                <div class="bg-white p-6 rounded-lg border w-full h-auto basis-1/3">
-                    <h2 class="text-xl font-semibold mb-4 text-gray-800">{{trans('message.avg-review')}}</h2>
-                    <div class="flex items-center mb-4">
-                        <span class="text-2xl font-bold text-yellow-500 mr-2">4.5</span>
-                        <div class="flex">
-                            <i class="fas fa-star text-yellow-500"></i>
-                            <i class="fas fa-star text-yellow-500"></i>
-                            <i class="fas fa-star text-yellow-500"></i>
-                            <i class="fas fa-star text-yellow-500"></i>
-                            <i class="fas fa-star text-yellow-300"></i>
-                        </div>
-                    </div>
-                    <div class="space-y-5">
-                        <div class="flex items-center gap-2">
-                            <span class="w-12 text-gray-600">5</span>
-                            <div class="w-full bg-gray-200 rounded-full h-2">
-                                <div class="bg-blue-800 h-2 rounded-full" style="width: 90%;"></div>
-                            </div>
-                            <span class="text-gray-600">90%</span>
-                        </div>
-                        <div class="flex items-center gap-2">
-                            <span class="w-12 text-gray-600">4</span>
-                            <div class="w-full bg-gray-200 rounded-full h-2">
-                                <div class="bg-blue-800 h-2 rounded-full" style="width: 60%;"></div>
-                            </div>
-                            <span class="text-gray-600">60%</span>
-                        </div>
-                        <div class="flex items-center gap-2">
-                            <span class="w-12 text-gray-600">3</span>
-                            <div class="w-full bg-gray-200 rounded-full h-2">
-                                <div class="bg-blue-800 h-2 rounded-full" style="width: 40%;"></div>
-                            </div>
-                            <span class="text-gray-600">40%</span>
-                        </div>
-                        <div class="flex items-center gap-2">
-                            <span class="w-12 text-gray-600">2</span>
-                            <div class="w-full bg-gray-200 rounded-full h-2">
-                                <div class="bg-blue-800 h-2 rounded-full" style="width: 20%;"></div>
-                            </div>
-                            <span class="text-gray-600">20%</span>
-                        </div>
-                        <div class="flex items-center gap-2">
-                            <span class="w-12 text-gray-600">1</span>
-                            <div class="w-full bg-gray-200 rounded-full h-2">
-                                <div class="bg-blue-800 h-2 rounded-full" style="width: 0%;"></div>
-                            </div>
-                            <span class="text-gray-600">0%</span>
-                        </div>
-                    </div>
-                </div>
-        
-                <div class="bg-white rounded-lg border w-full basis-2/3 p-6">
-                    <h2 class="text-xl font-semibold mb-4 text-gray-800">{{trans('message.submit-review')}}</h2>
-                    <form class="space-y-4">
-                        <div>
-                           <div class="flex gap-4 items-center">
-                                <label class="block text-sm text-gray-600">{{trans('message.add-review')}}</label>
-                                <div class="flex">
-                                    <i class="fas fa-star text-yellow-500 cursor-pointer"></i>
-                                    <i class="fas fa-star text-yellow-500 cursor-pointer"></i>
-                                    <i class="fas fa-star text-yellow-500 cursor-pointer"></i>
-                                    <i class="fas fa-star text-yellow-500 cursor-pointer"></i>
-                                    <i class="fas fa-star text-yellow-300 cursor-pointer"></i>
-                                </div>
-                           </div>
-                        </div>
-                        <div class="flex items-center gap-5 mb-3">
-                            <div class="mb-3 basis-1/2">
-                                <label
-                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{trans('message.name')}}</label>
-                                <input type="name" id="name"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                    required />
-                            </div>
+    </section>              
 
-                            <div class="mb-3 basis-1/2">
-                                <label
-                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{trans('message.email')}}</label>
-                                <input type="email" id="email"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                    required />
+    <div class="tabs bg-white p-10">
+        <div class="flex ">
+            <ul class="flex min-w-max overflow-x-auto transition-all duration-300 overflow-hidden">
+                <li>
+                    <a href="javascript:void(0)"
+                        class="uppercase text-lg flex items-center py-3 px-6 text-gray-500 border-b-2 border-transparent hover:text-gray-800 font-medium tab-active:text-indigo-600 tab-active:border-b-indigo-600 active tablink whitespace-nowrap"
+                        data-tab="tabs-with-badge-1" role="tab">
+                        {{trans('message.review-product')}}
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:void(0)"
+                        class="uppercase text-lg flex items-center py-3 px-6 text-gray-500 border-b-2 border-transparent hover:text-gray-800 font-medium tab-active:text-indigo-600 tab-active:border-b-indigo-600 tablink whitespace-nowrap"
+                        data-tab="tabs-with-badge-2" role="tab">{{trans('message.description-product')}}</a>
+                </li>
+                <li>
+                    <a href="javascript:void(0)"
+                        class="uppercase text-lg flex items-center py-3 px-6 text-gray-500 border-b-2 border-transparent hover:text-gray-800 font-medium tab-active:text-indigo-600 tab-active:border-b-indigo-600 tablink whitespace-nowrap"
+                        data-tab="tabs-with-badge-3" role="tab">{{trans('message.warranty-policy')}}</a>
+                </li>
+                <li>
+                    <a href="javascript:void(0)"
+                        class="uppercase text-lg flex items-center py-3 px-6 text-gray-500 border-b-2 border-transparent hover:text-gray-800 font-medium tab-active:text-indigo-600 tab-active:border-b-indigo-600 tablink whitespace-nowrap"
+                        data-tab="tabs-with-badge-4" role="tab">{{trans('message.shoe-tip')}}</a>
+                </li>
+            </ul>
+        </div>
+        <div class="mt-3">
+            <div id="tabs-with-badge-1" role="tabpanel" aria-labelledby="tabs-with-badge-item-1"
+                class="tabcontent">
+                <section class="bg-white">
+                    <div class="pl-[150px] pr-[150px]">
+                        <div class="flex items-start gap-10 w-full">
+                            <div class="bg-white p-6 rounded-lg border w-full h-auto basis-1/3">
+                                <h2 class="text-xl font-semibold mb-4 text-gray-800">{{ trans('message.avg-review') }}</h2>
+                                <div class="flex items-center mb-4">
+                                    <span class="text-2xl font-bold text-yellow-500 mr-2">{{ $avgReview }}</span>
+                                    <div class="flex">
+                                        <i class="fas fa-star text-yellow-500"></i>
+                                    </div>
+                                </div>
+                                <div class="space-y-5">
+                                    @foreach ($starPercent as $star => $percent)
+                                        <div class="flex items-center gap-2">
+                                            <span class="w-12 text-gray-600">{{ $star }}</span>
+                                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                                <div class="bg-blue-800 h-2 rounded-full" style="width: {{ $percent }}%;">
+                                                </div>
+                                            </div>
+                                            <span class="text-gray-600">{{ $percent }}%</span>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            </div>
+                            <div class="bg-white rounded-lg border w-full basis-2/3 p-6">
+                                <h2 class="text-xl font-semibold mb-4 text-gray-800">{{ trans('message.submit-review') }}</h2>
+                                <form class="space-y-4">
+                                    <div>
+                                        <div class="flex gap-4 items-center">
+                                            <label class="block text-sm text-gray-600">{{ trans('message.add-review') }}</label>
+                                            <div class="flex" id="star-rating">
+                                                <i class="fas fa-star text-gray-400 cursor-pointer" data-index="1"></i>
+                                                <i class="fas fa-star text-gray-400 cursor-pointer" data-index="2"></i>
+                                                <i class="fas fa-star text-gray-400 cursor-pointer" data-index="3"></i>
+                                                <i class="fas fa-star text-gray-400 cursor-pointer" data-index="4"></i>
+                                                <i class="fas fa-star text-gray-400 cursor-pointer" data-index="5"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center gap-5 mb-3">
+                                        <div class="mb-3 basis-1/2">
+                                            <label
+                                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ trans('message.name') }}</label>
+                                            <input type="name" id="name"
+                                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                                required />
+                                        </div>
+            
+                                        <div class="mb-3 basis-1/2">
+                                            <label
+                                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ trans('message.email') }}</label>
+                                            <input type="email" id="email"
+                                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                                required />
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <label
+                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ trans('message.content') }}</label>
+                                        <textarea id="comment"
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                            rows="5" cols="30" placeholder="{{ trans('message.write-here') }}"></textarea>
+                                    </div>
+                                    <button type="button" id="send-review"
+                                        class="flex justify-center items-center gap-2 text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                            stroke-width="1.5" stroke="currentColor" class="size-6">
+                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                d="M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L5.999 12Zm0 0h7.5" />
+                                        </svg>
+                                        {{ trans('message.send-review') }}
+                                    </button>
+                                </form>
                             </div>
                         </div>
-                        <div>
-                            <label
-                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{trans('message.content')}}</label>
-                            <textarea class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" rows="5" cols="30" placeholder="{{trans('message.write-here')}}"></textarea>
+                    </div>
+                    <section class="relative">
+                        <div class="w-full max-w-7xl px-4 md:px-5 lg-6 mx-auto" id="comment-container">
+            
                         </div>
-                        <button type="button"
-                                class="flex justify-center items-center gap-2 text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L5.999 12Zm0 0h7.5" />
-                                </svg>
-                                {{trans('message.send-review')}}
-                            </button>
-                    </form>
+                        <div class="text-center">
+                            <p id="more-comment" class="text-blue-700 text-lg cursor-pointer p-5 font-mono">Xem thêm ...</p>
+                        </div>
+                        </div>
+                    </section>
+                    <input type="hidden" id="product-id" value="{{ $data->id }}">
+                </section>
+            </div>
+            <div id="tabs-with-badge-2" class="hidden tabcontent" role="tabpanel"
+                aria-labelledby="tabs-with-badge-item-2">
+                <div class="pl-[150px] pr-[150px]" style="line-height: 30px;">
+                    {!! $data->description !!}
+                </div>
+            </div>
+            <div id="tabs-with-badge-3" class="hidden tabcontent" role="tabpanel"
+                aria-labelledby="tabs-with-badge-item-3">
+                <div class="pl-[150px] pr-[150px]" style="line-height: 30px;">
+                    <p>{{trans('message.warranty-policy-1')}}</p><br>
+                    <img src="https://file.hstatic.net/200000278317/file/baohanh2_93b9597ceba746559f5ba19054546a1d.jpg" alt=""><br>
+                    <p>{{trans('message.warranty-policy-2')}}</p><br>
+                    <p><strong>{{trans('message.warranty-policy-3')}}</strong></p><br>
+                    <p>{{trans('message.warranty-policy-4')}}
+                        <strong>{{trans('message.warranty-policy-13')}}</strong>
+                        <span>{{trans('message.warranty-policy-14')}}</span>
+                    </p><br>
+                    <div class="ml-5">
+                        <p>{{trans('message.warranty-policy-5')}}</p>
+                        <p>{{trans('message.warranty-policy-6')}}</p>
+                        <p>{{trans('message.warranty-policy-7')}}</p>
+                    </div>
+                    <br>
+                    <p>{{trans('message.warranty-policy-8')}}
+                        <strong>{{trans('message.warranty-policy-15')}}</strong>
+                        <span>{{trans('message.warranty-policy-16')}}</span>
+                    </p><br>
+                    <div class="ml-5">
+                        <p>{{trans('message.warranty-policy-9')}}</p>
+                        <p>{{trans('message.warranty-policy-17')}}</p>
+                    </div>
+                    <br>
+                    <p>{{trans('message.warranty-policy-10')}}</p><br>
+                    <img src="https://file.hstatic.net/200000278317/file/baohanh1_b702947d711c4ffca5a837f8c9363d1d.jpg" alt="">
+                    <br>
+                    <p><strong>{{trans('message.warranty-policy-11')}}</strong></p><br>
+                    <p>{{trans('message.warranty-policy-12')}}</p>
+                    
+                </div>
+            </div>
+            <div id="tabs-with-badge-4" class="hidden tabcontent" role="tabpanel"
+                aria-labelledby="tabs-with-badge-item-4">
+                <div class="pl-[150px] pr-[150px]" style="line-height: 30px;">
+                    <p>{{trans('message.tip-shoe-1')}}</p><br>
+                    <p><strong>{{trans('message.tip-shoe-2')}}</strong></p><br>
+                    <img class="w-full" src="https://file.hstatic.net/200000278317/file/trang-break-in-giay-2_8b96a8d5d72d462685947682b1963ea2.jpg" alt=""><br>
+                    <p><strong>{{trans('message.tip-shoe-3')}}</strong></p><br>
+                    <p class="italic">{{trans('message.tip-shoe-4')}}</p><br>
+                    <img class="w-full" src="https://file.hstatic.net/200000278317/file/trang-break-in-giay-1_f006461552604f3bb0cccf4fe3b64c5e.jpg" alt=""><br>
+                    <p><strong>{{trans('message.tip-shoe-5')}}</strong></p><br>
+                    <img class="w-full" src="https://file.hstatic.net/200000278317/file/trang-break-in-giay-3_9804664335254ab3940fd6172881d3c7.jpg" alt="">
                 </div>
             </div>
         </div>
-        <section class="relative">
-            <div class="w-full max-w-7xl px-4 md:px-5 lg-6 mx-auto">
-                <div class="w-full">
-                    <div class="p-10 mb-8 max-xl:max-w-2xl max-xl:mx-auto">
-                        <div class="flex sm:items-center flex-col min-[400px]:flex-row justify-between gap-5 mb-4">
-                            <div class="flex items-center gap-3">
-                                <img src="https://pagedone.io/asset/uploads/1704349572.png" alt="John image" class="w-8 h-8 rounded-full object-cover">
-                                <h6 class="font-semibold text-lg leading-8 text-indigo-600 ">John Watson</h6>
-                            </div>
-                            <p class="font-normal text-lg leading-8 text-gray-400">Nov 01, 2023</p>
-                        </div>
-                        <p class="font-normal text-lg leading-8 text-gray-400 max-xl:text-justify">One of the standout features of Pagedone is its intuitive and user-friendly interface. Navigating through the system feels natural, and the layout makes it easy to locate and utilize various design elements. This is particularly beneficial for designers looking to streamline their workflow.</p>
-                    </div>
-                </div>
-            </div>
-            </div>
-        </section>
-                                                
-    </section>
-    
+    </div>
+
+
 </x-app-layout>
 <script>
+    $(document).ready(function() {
+        
+        let goodJob = `{{ trans('message.good-job') }}`;
+        let Error = `{{ trans('message.error') }}`;
+        let wentWrong = `{{ trans('message.went-wrong') }}`;
+        let selectRating = 0;
+        let productId = $('#product-id').val();
+        loadReview();
+        let page = 1;
+
+        $('#btn-decrease').on('click', function() {
+            let quantity = parseInt($('#quantity').val()); 
+            if (quantity >= 2) {
+                quantity -= 1;
+                $('#quantity').val(quantity); 
+            }
+        });
+
+        $('#btn-increase').on('click', function() {
+            let quantity = parseInt($('#quantity').val()); 
+            if (quantity >= 1) {
+                quantity += 1;
+                $('#quantity').val(quantity); 
+            }
+        });
+
+        $('#btn-add-cart').on('click', () => {
+            $.ajax({
+                url: '/home/product/add_to_cart',
+                method: 'POST',
+                data: {
+                    id: productId,
+                    quantity: parseInt($('#quantity').val()),
+                    _token: $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function(response) {
+                    if (response.status == 'success') {
+                        $('#cart-item-text').text(response.countCart);
+                        swal(goodJob, response.message, response.status);
+                    }
+                }
+            })
+        })
+
+        function loadReview(page) {
+            $.ajax({
+                url: `/home/product/review?page=${page}`,
+                method: 'GET',
+                data: {
+                    product_id: productId,
+                },
+                success: function(response) {
+                    if (response.status == 'success' && Array.isArray(response.data.data)) {
+                        let htmlContent = '';
+                        response.data.data.forEach(review => {
+                            let stars = '';
+                            for (let i = 1; i <= 5; i++) {
+                                if (i <= review.star) {
+                                    stars +=
+                                        `<i class="fas fa-star text-yellow-500 cursor-pointer"></i>`;
+                                } else {
+                                    stars +=
+                                        `<i class="fas fa-star text-gray-400 cursor-pointer"></i>`;
+                                }
+                            }
+                            htmlContent += `
+                                <div class="w-full">
+                                       <article class="p-6 text-base bg-white rounded-lg dark:bg-gray-900">
+                                            <footer class="flex justify-between items-center mb-2">
+                                                <div class="flex items-center">
+                                                    <p class="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white font-semibold">${review.name}</p>
+                                                    <p class="text-sm text-gray-600 dark:text-gray-400">${new Date(review.created_at).toLocaleDateString()}</p>
+                                                </div>
+                                                <div class="mt-5">
+                                                    ${stars}
+                                                </div>
+                                            </footer>
+                                            <p class="text-gray-500 dark:text-gray-400">${review.comment}</p>
+                                        </article>
+                                </div>
+                            `;
+                        });
+
+                        $('#comment-container').append(htmlContent);
+                    }
+                    if (response.data.next_page_url == null) {
+                        console.log(1);
+                        $('#more-comment').hide();
+                    }
+                },
+            })
+        }
+
+        $('#more-comment').on('click', function() {
+            page++;
+            loadReview(page);
+        })
+
+        $('#star-rating i').hover(
+            function() {
+                let index = $(this).data('index');
+                hilightStars(index);
+            },
+            function() {
+                hilightStars(selectRating);
+            }
+        )
+
+        $('#star-rating i').on('click', function() {
+            selectRating = $(this).data('index');
+            hilightStars(selectRating);
+        })
+
+        function hilightStars(rating) {
+            $('#star-rating i').each(function() {
+                if ($(this).data("index") <= rating) {
+                    $(this).removeClass("text-gray-400").addClass("text-yellow-500");
+                } else {
+                    $(this).removeClass("text-yellow-500").addClass("text-gray-400");
+                }
+            })
+        }
+
+        $('#send-review').on('click', function() {
+            let goodJob = `{{ trans('message.good-job') }}`;
+            let Error = `{{ trans('message.error') }}`;
+            let wentWrong = `{{ trans('message.went-wrong') }}`;
+            let button = $('#send-review');
+            button.prop('disabled', true).html(`
+                        <svg aria-hidden="true" role="status" class="inline w-4 h-4 me-3 text-gray-200 animate-spin dark:text-gray-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"/>
+                            <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="#1C64F2"/>
+                        </svg>
+                        {{ trans('message.loading') }}
+                    `);
+            $.ajax({
+                url: '/home/product/review',
+                method: 'POST',
+                data: {
+                    product_id: productId,
+                    rating: selectRating,
+                    name: $('#name').val(),
+                    email: $('#email').val(),
+                    comment: $('#comment').val(),
+                    _token: $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function(response) {
+                    if (response.status == 'success') {
+                        let stars = '';
+                        for (let i = 1; i <= 5; i++) {
+                            if (i <= response.data.star) {
+                                stars +=
+                                    `<i class="fas fa-star text-yellow-500 cursor-pointer"></i>`;
+                            } else {
+                                stars +=
+                                    `<i class="fas fa-star text-gray-400 cursor-pointer"></i>`;
+                            }
+                        }
+                        let commentHtml = `
+                            <div class="w-full">
+                                       <article class="p-6 text-base bg-white rounded-lg dark:bg-gray-900">
+                                            <footer class="flex justify-between items-center mb-2">
+                                                <div class="flex items-center">
+                                                    <p class="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white font-semibold">${response.data.name}</p>
+                                                    <p class="text-sm text-gray-600 dark:text-gray-400">${new Date(response.data.created_at).toLocaleDateString()}</p>
+                                                </div>
+                                                <div class="mt-5">
+                                                    ${stars}
+                                                </div>
+                                            </footer>
+                                            <p class="text-gray-500 dark:text-gray-400">${response.data.comment}</p>
+                                        </article>
+                                </div>
+                        `
+                        swal(goodJob, response.message, response.status)
+                        $('#comment-container').prepend(commentHtml);
+                    }
+                },
+                error: function(error) {
+                    swal(Error, wentWrong, "error");
+                },
+                complete: function() {
+                    button.prop('disabled', false).html(`
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                stroke-width="1.5" stroke="currentColor" class="size-6">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L5.999 12Zm0 0h7.5" />
+                            </svg>
+                            {{ trans('message.send-review') }}
+                                `);
+                }
+            })
+        })
+
+    })
+
     var swiper_thumbs = new Swiper(".nav-for-slider", {
         loop: true,
         spaceBetween: 30,

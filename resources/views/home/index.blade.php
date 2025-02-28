@@ -86,6 +86,10 @@
 
             loadProduct();
             loadBrand();
+            
+            let goodJob = `{{ trans('message.good-job') }}`;
+            let error = `{{ trans('message.error') }}`;
+            let wentWrong = `{{ trans('message.went-wrong') }}`;
             function loadProduct(page = 1, keyWord) {
                 $.ajax({
                     url: '/home/product',
@@ -98,12 +102,12 @@
                         if (response.status === "success") {
                             response.data.forEach(product => {
                                 let productContainer = `
-                                    <a href="/home/product/detail/${product.id}"
+                                    <div 
                                         class="mx-auto sm:mr-0 group cursor-pointer lg:mx-auto bg-white transition-all duration-500">
-                                        <div class="">
+                                        <a href="/home/product/detail/${product.id}">
                                             <img src="storage/${product.main_image.image_url}" alt="face cream image"
                                                 class="w-full aspect-square rounded-2xl object-cover transition-opacity duration-300 hover:opacity-80">
-                                        </div>
+                                        </a>
                                         <div class="mt-5">
                                             <div class="flex flex-col justify-between">
                                                 <h6
@@ -114,8 +118,8 @@
                                             <div class="flex items-center justify-between">
                                                 <h6 class="font-semibold text-xl leading-8 text-indigo-600">${product.price}</h6>
                                                 <div class="flex">
-                                                    <button
-                                                        class="min-[400px]:p-3 rounded-full bg-white border border-gray-300 flex items-center justify-center group shadow-sm shadow-transparent transition-all duration-500 hover:shadow-gray-200 hover:border-gray-400 hover:bg-gray-50">
+                                                    <button data-id = ${product.id}
+                                                        class="btn-add-cart min-[400px]:p-3 rounded-full bg-white border border-gray-300 flex items-center justify-center group shadow-sm shadow-transparent transition-all duration-500 hover:shadow-gray-200 hover:border-gray-400 hover:bg-gray-50">
                                                         <svg class="stroke-gray-900 transition-all duration-500 group-hover:stroke-black"
                                                             xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 26 26"
                                                             fill="none">
@@ -127,7 +131,7 @@
                                                 </div>    
                                             </div>
                                         </div>
-                                    </a>
+                                    </div>
                                 `;
 
                                 $("#product-container").append(productContainer);
@@ -177,5 +181,26 @@
                     }
                 });
             }
+
+            $(document).on('click', '.btn-add-cart', function() {
+
+                productId = $(this).data('id');
+
+                $.ajax({
+                    url: '/home/product/add_to_cart',
+                    method: 'POST',
+                    data: {
+                        id: productId,
+                        quantity: 1,
+                        _token: $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function(response) {
+                        if (response.status == 'success') {
+                            $('#cart-item-text').text(response.countCart);
+                            swal(goodJob, response.message, response.status);
+                        }
+                    }
+                })
+            })
         })
     </script>

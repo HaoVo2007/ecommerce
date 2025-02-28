@@ -286,11 +286,21 @@
 
                             <div class="mb-3">
                                 <label for="category"
-                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{trans('message.category')}}</label>
-                                <select id="categoryProduct"
+                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{trans('message.parent-category')}}</label>
+                                <select id="parentCategory"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                    <option selected>Choose a country</option>
-                                    <option value="1">United States</option>
+                                    <option selected value="{{$data->category->id}}">{{$data->category->name}}</option>
+                                </select>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="category"
+                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{trans('message.category')}}</label>
+                                <select id="typeProduct" data-placeholder="{{trans('message.select-type')}}"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                    <option selected value="{{$data->type}}">{{$data->type == 1 ? trans('message.at-base') : trans('message.tf-base')}}</option>
+                                    <option value="1">{{trans('message.at-base')}}</option>
+                                    <option value="2">{{trans('message.tf-base')}}</option>
                                 </select>
                             </div>
                         </div>
@@ -412,7 +422,7 @@
             let oldMainImage = '{{$data->mainImage->image_url}}';
             let oldSubImages = @json($data->subImage->pluck('image_url'));
             let id = $('#id_product').val();
- 
+
             if (oldMainImage) {
                 const mainImageWrapper = $('<div>').addClass('relative inline-block');
                 const mainImg = $('<img>')
@@ -538,6 +548,45 @@
                 $(this).val('');
             });
 
+            $('#parentCategory').select2({
+                ajax: {
+                    url: '/admin/load_category',
+                    dataType: 'json',
+                    delay: 250,
+                    processResults: function(data) {
+                        return {
+                            results: data
+                        };
+                    },
+                    cache: true
+                },
+                placeholder: '{{trans('message.select-category')}}',
+                allowClear: true,
+                language: {
+                    searching: function() {
+                        return '{{trans('message.loading')}}';
+                    },
+                    noResults: function() {
+                        return '{{trans('message.no-result')}}';
+                    }
+                }
+            });
+
+            $('#typeProduct').select2({
+                width: '100%',
+                placeholder: $('#typeProduct').data('placeholder'), // Lấy placeholder từ data-placeholder
+                allowClear: true,
+                language: {
+                    searching: function() {
+                        return '{{trans('message.loading')}}';
+                    },
+                    noResults: function() {
+                        return '{{trans('message.no-result')}}';
+                    }
+                }
+            });
+
+
             function updateInputFiles() {
                 const dataTransfer = new DataTransfer();
                 selectedFiles.forEach(file => dataTransfer.items.add(file));
@@ -561,7 +610,9 @@
                 formData.append('name', $('#nameProduct').val());
                 formData.append('price', $('#priceProduct').val());
                 formData.append('description', editorInstance.getData());
-                formData.append('category', $('#categoryProduct').val());
+                formData.append('category', $('#parentCategory').val());
+                formData.append('type', $('#typeProduct').val());
+
 
                 if ($('#main_image')[0].files.length > 0) {
                     formData.append('mainImage', $('#main_image')[0].files[0]);

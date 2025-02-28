@@ -38,6 +38,7 @@ class ProductController extends Controller
     }
 
     public function addProduct(Request $request) {
+        
         $validator = Validator::make($request->all(), [
             'name'        => 'required|string|max:255',
             'price'       => 'required|numeric|min:0',
@@ -152,6 +153,7 @@ class ProductController extends Controller
             'sizes.*'     => 'string|max:50',
             'quantities'  => 'required|array',
             'quantities.*'=> 'integer|min:1',
+            'type' => 'required',
         ]);
 
         if($validator->fails()) {
@@ -173,6 +175,7 @@ class ProductController extends Controller
                 'price' => $request->price,
                 'description' => $request->description,
                 'category_id' => $request->category,
+                'type' => $request->type,
             ]);
 
             $subImageOld = $request->old_sub_images ?? [];

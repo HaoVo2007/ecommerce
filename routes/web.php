@@ -2,19 +2,49 @@
 
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Home\CartController;
 use App\Http\Controllers\Home\CategoryController as HomeCategoryController;
 use App\Http\Controllers\Home\ProductController as HomeProductController;
 use App\Http\Controllers\ProfileController;
+use App\Models\Cart;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
 
 Route::get('/', function () {
-    return view('welcome');
+
+    session()->forget('countCart');
+
+    if (Auth::check()) {
+        $countCart = Cart::where('user_id', Auth::id())
+            ->count();
+    } else {
+        $cart = session()->get('cart', []);
+        $countCart = count($cart);
+    }
+
+    session()->put('countCart', $countCart);
+
+    return view('home.index');
 });
 
 Route::get('/home', function () {
+
+    session()->forget('countCart');
+
+    if (Auth::check()) {
+        $countCart = Cart::where('user_id', Auth::id())
+            ->count();
+    } else {
+        $cart = session()->get('cart', []);
+        $countCart = count($cart);
+    }
+
+    session()->put('countCart', $countCart);
+
     return view('home.index');
-})->middleware(['auth', 'verified'])->name('dashboard');
+
+})->name('dashboard');
 
 Route::get('/admin', function () {
     return view('admin.index');
@@ -51,10 +81,22 @@ Route::prefix('admin')->group(function () {
 
 Route::prefix('home')->group(function() {
     Route::get('/brand', [HomeCategoryController::class, 'getBrand']);
-    // HOME PRODUCTS
+    //HOME PRODUCTS
     Route::get('/product', [HomeProductController::class, 'getProduct']);
     Route::get('/product/detail/{id}', [HomeProductController::class, 'viewDetail']);
+    Route::post('/product/review', [HomeProductController::class, 'sendReviewProduct']);
+    Route::get('/product/review', [HomeProductController::class, 'getReviewProduct']);
     //HOME PRODUCTS
+
+    //HOME CART
+    Route::get('/product/cart', [CartController::class, 'viewCart']);
+    Route::post('/product/add_to_cart', [CartController::class, 'addToCart']);
+    Route::get('/product/get_cart', [CartController::class, 'getCart']);
+    Route::post('/product/delete/cart/{id}', [CartController::class, 'deleteProductCart']);
+    Route::post('/product/update/cart/{id}', [CartController::class, 'updateQuantityCart']);
+
+    //HOME CART
+
 
 });
 

@@ -504,12 +504,12 @@
                 let categoryId = $('#idCategory').val();
                 let url = categoryId ? `/admin/category/update/${categoryId}` : '/admin/category/add_category'; 
                 let formData = new FormData();
-                console.log(url);
                 formData.append('_token', $('meta[name="csrf-token"]').attr('content'));
                 formData.append('name', name);
                 formData.append('parentId', parentId);
                 formData.append('imageCategory', $('#main_image')[0].files[0]);
-
+                formData.append('oldImageCategory', oldImageCategory);
+                
                 let button = $('#btn-save');
                 button.prop('disabled', true).html(`
                         <svg aria-hidden="true" role="status" class="inline w-4 h-4 me-3 text-gray-200 animate-spin dark:text-gray-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">

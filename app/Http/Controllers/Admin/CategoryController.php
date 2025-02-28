@@ -165,6 +165,25 @@ class CategoryController extends Controller
 
             }
 
+        } else if ($request->oldImageCategory != 'null') {
+            if ($parentId == 'null') {
+
+                $data = $category->update([
+                    'name' => $name,
+                    'parent_id' => 0,
+                    'image_url' => $request->oldImageCategory,
+                ]);
+
+            } else {
+
+                $data = $category->update([
+                    'name' => $name,
+                    'parent_id' => $parentId,
+                    'image_url' => $request->oldImageCategory,
+                ]);
+                 
+            }
+
         } else {
             if ($category->image_url) {
 
@@ -175,7 +194,7 @@ class CategoryController extends Controller
                 }                
             }
 
-                        if ($parentId == 'null') {
+            if ($parentId == 'null') {
 
                 $data = $category->update([
                     'name' => $name,

@@ -15,7 +15,7 @@
     <link href="https://cdn.jsdelivr.net/npm/pagedone@1.2.2/src/css/pagedone.css " rel="stylesheet"/>
     <link href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" rel="stylesheet"/>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="{{asset('css/style.css')}}">
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
@@ -132,6 +132,19 @@
             {{ $slot }}
         </main>
     </div>
+    <script>
+        var translations = {
+            areYouSure: "{{ trans('message.are-you-sure') }}",
+            deleteItem: "{{ trans('message.delete-item') }}",
+            safe: "{{ trans('message.safe') }}",
+            goodJob: "{{ trans('message.good-job') }}",
+            error: "{{ trans('message.error') }}",
+            wentWrong: "{{ trans('message.went-wrong') }}",
+            cartEmpty: "{{ trans('message.cart-empty') }}",
+            goStore: "{{ trans('message.go-store') }}",
+        };
+    </script>    
+    <script src="{{ asset('js/cart-modal.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/pagedone@1.2.2/src/js/pagedone.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
