@@ -325,7 +325,7 @@
 
                     if (willDelete) {
                         let goodJob = `{{ trans('message.good-job') }}`;
-                        let error = `{{ trans('message.error') }}`;
+                        let Error = `{{ trans('message.error') }}`;
                         let wentWrong = `{{ trans('message.went-wrong') }}`;
                         $.ajax({
                             url: '/admin/product/delete_product',
@@ -340,11 +340,11 @@
                                     .status);
                                     loadProduct();
                                 } else {
-                                    swal(error, wentWrong, 'error');
+                                    swal(Error, wentWrong, 'error');
                                 }
                             },
                             error: function() {
-                                swal(error, wentWrong,
+                                swal(Error, wentWrong,
                                 'error');
                             },
                             complete: function() {

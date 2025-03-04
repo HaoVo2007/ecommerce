@@ -1,6 +1,7 @@
+
 <x-app-layout>
     <section
-        class="bg-white relative z-10 after:contents-[''] after:absolute after:z-0 after:h-full xl:after:w-1/3 after:top-0 after:right-0 after:bg-gray-50">
+        class="mt-28 bg-white relative z-10 after:contents-[''] after:absolute after:z-0 after:h-full xl:after:w-1/3 after:top-0 after:right-0 after:bg-gray-50">
         <div class="w-full max-w-7xl px-4 md:px-5 lg-6 mx-auto relative z-10">
             <div class="grid grid-cols-12">
                 <div
@@ -35,16 +36,16 @@
                                 <div class="md:col-span-2">
                                     <div class="flex flex-col max-[500px]:items-center gap-3">
                                         <h6 class="font-semibold text-base leading-7 text-black">{{$item->name ? $item->name : $item->product->name}}</h6>
-                                        <h6 class="font-normal text-base leading-7 text-gray-500">Perfumes</h6>
+                                        <h6 class="font-normal text-base leading-7 text-gray-500">{{trans('message.size')}}: {{$item->size}}</h6>
                                         <h6
                                             class="font-medium text-base leading-7 text-gray-600 transition-all duration-300 group-hover:text-indigo-600">
                                             {{$item->price ? $item->price : $item->product->price}}</h6>
                                     </div>
                                 </div>
                                 <div class="flex items-center max-[500px]:justify-center h-full max-md:mt-3">
-                                    <div class="flex items-center h-full">
-                                        <button
-                                            class="group rounded-l-xl px-5 py-[18px] border border-gray-200 flex items-center justify-center shadow-sm shadow-transparent transition-all duration-500 hover:bg-gray-50 hover:border-gray-300 hover:shadow-gray-300 focus-within:outline-gray-300">
+                                    <div class="flex items-center h-full z-10">
+                                        <button data-id="{{$item->product_id ? $item->product_id : $item->product->id}}" data-size="{{$item->size ? $item->size : $item->product->productSizes->size}}"
+                                            class="btn-decrease-cart group rounded-l-xl px-5 py-[18px] border border-gray-200 flex items-center justify-center shadow-sm shadow-transparent transition-all duration-500 hover:bg-gray-50 hover:border-gray-300 hover:shadow-gray-300 focus-within:outline-gray-300">
                                             <svg class="stroke-gray-900 transition-all duration-500 group-hover:stroke-black"
                                                 xmlns="http://www.w3.org/2000/svg" width="22" height="22"
                                                 viewBox="0 0 22 22" fill="none">
@@ -56,11 +57,11 @@
                                                     stroke-width="1.6" stroke-linecap="round" />
                                             </svg>
                                         </button>
-                                        <input type="text"
+                                        <input type="number"
                                             class="border-y border-gray-200 outline-none text-gray-900 font-semibold text-lg w-full max-w-[73px] min-w-[60px] placeholder:text-gray-900 py-[15px]  text-center bg-transparent"
-                                            placeholder="1">
-                                        <button
-                                            class="group rounded-r-xl px-5 py-[18px] border border-gray-200 flex items-center justify-center shadow-sm shadow-transparent transition-all duration-500 hover:bg-gray-50 hover:border-gray-300 hover:shadow-gray-300 focus-within:outline-gray-300">
+                                            value="{{$item->quantity}}" min="1">
+                                        <button data-id="{{$item->product_id ? $item->product_id : $item->product->id}}" data-size="{{$item->size ? $item->size : $item->product->productSizes->size}}"
+                                            class="btn-increase-cart group rounded-r-xl px-5 py-[18px] border border-gray-200 flex items-center justify-center shadow-sm shadow-transparent transition-all duration-500 hover:bg-gray-50 hover:border-gray-300 hover:shadow-gray-300 focus-within:outline-gray-300">
                                             <svg class="stroke-gray-900 transition-all duration-500 group-hover:stroke-black"
                                                 xmlns="http://www.w3.org/2000/svg" width="22" height="22"
                                                 viewBox="0 0 22 22" fill="none">
@@ -76,8 +77,8 @@
                                 </div>
                                 <div class="flex items-center max-[500px]:justify-center md:justify-end max-md:mt-3 h-full">
                                     <p
-                                        class="font-bold text-lg leading-8 text-gray-600 text-center transition-all duration-300 group-hover:text-indigo-600">
-                                        {{$item->price ? $item->price : $item->product->price}}</p>
+                                        class="price-text font-bold text-lg leading-8 text-gray-600 text-center transition-all duration-300 group-hover:text-indigo-600">
+                                        {{number_format($item->price, 0, ',', '.') ? number_format($item->price, 0, ',', '.')  : number_format($item->product->price, 0, ',', '.')}}</p>
                                 </div>
                             </div>
                         </div>
@@ -90,7 +91,7 @@
                     <div class="mt-8">
                         <div class="flex items-center justify-between pb-6">
                             <p class="font-normal text-lg leading-8 text-black">{{ session('countCart', 0) }} {{trans('message.items')}}</p>
-                            <p class="font-medium text-lg leading-8 text-black">{{$total}}</p>
+                            <p id="total" class="font-medium text-lg leading-8 text-black">{{number_format($total, 0, ',', '.')}}</p>
                         </div>
                         <form>
                             <label class="flex  items-center mb-1.5 text-gray-600 text-sm font-medium">{{trans('message.ship')}}
@@ -145,7 +146,7 @@
                             </div>
                             <div class="flex items-center justify-between py-8">
                                 <p class="font-medium text-xl leading-8 text-black">{{ session('countCart', 0) }} {{trans('message.items')}}</p>
-                                <p class="font-semibold text-xl leading-8 text-indigo-600">{{$total}}</p>
+                                <p id="total-last" class="font-semibold text-xl leading-8 text-indigo-600">{{number_format($total, 0, ',', '.')}}</p>
                             </div>
                             <button
                                 class="w-full text-center bg-indigo-600 rounded-xl py-3 px-6 font-semibold text-lg text-white transition-all duration-500 hover:bg-indigo-700">{{trans('message.checkout')}}</button>
@@ -155,5 +156,120 @@
             </div>
         </div>
     </section>
+    <script>
+        $(document).ready(function() {
 
+            function formatCurrency(number) {
+                return number.toLocaleString('vi-VN');
+            }
+
+            function updateTotal() {
+
+                let total = 0
+
+                $('.price-text').each(function() {
+                    let price = $(this).text().replace(/\D/g, "");
+                    total = total + parseInt(price);
+                })
+
+                $('#total, #total-last').text(formatCurrency(total));
+                
+                console.log(total);
+            }
+
+            $(document).on('click', '.btn-decrease-cart', function () {
+
+                let productId = $(this).data('id');
+                let size = $(this).data('size');
+                let inputElement = $(this).siblings('input');
+                let quantity = 1;
+                let keyId = productId + '_' + size;
+
+                $.ajax({
+                    url: `/home/product/update/cart/${productId}`,
+                    method: "POST",
+                    data: {
+                        type: 2,
+                        size: size,
+                        _token: $('meta[name="csrf-token"]').attr("content"),
+                    },
+                    success: function (response) {
+
+                        if (response.data.quantity) {
+
+                            quantity = response.data.quantity
+                            price = response.data.price;
+
+                        } else {
+
+                            quantity = response.data[keyId].quantity
+                            price = response.data[keyId].price;
+
+                        }
+
+                        if (response.status == "success") {
+
+                            inputElement.val(quantity)
+
+                            $(`button[data-id="${productId}"][data-size="${size}"]`)
+                            .closest(".grid")
+                            .find(".price-text")
+                            .text(formatCurrency(parseInt(price)));
+
+                            updateTotal()
+
+                        }
+                    }
+                });
+            })
+
+            $(document).on('click', '.btn-increase-cart', function (event) {
+
+                let productId = $(this).data('id');
+                let size = $(this).data('size');
+                let inputElement = $(this).siblings('input');
+                let quantity = 1;
+                let keyId = productId + '_' + size;
+
+                $.ajax({
+                    url: `/home/product/update/cart/${productId}`,
+                    method: "POST",
+                    data: {
+                        type: 1,
+                        size: size,
+                        _token: $('meta[name="csrf-token"]').attr("content"),
+                    },
+                    success: function (response) {
+
+                        if (response.data.quantity) {
+
+                            quantity = response.data.quantity
+                            price = response.data.price;
+
+
+                        } else {
+
+                            quantity = response.data[keyId].quantity
+                            price = response.data[keyId].price;
+
+                        }
+
+                        if (response.status == "success") {
+
+                            inputElement.val(quantity)
+
+                            $(`button[data-id="${productId}"][data-size="${size}"]`)
+                            .closest(".grid")
+                            .find(".price-text")
+                            .text(formatCurrency(parseInt(price)));
+
+                            updateTotal()
+
+                        }
+                    }
+                });
+           
+        })
+    })
+    </script>
 </x-app-layout>

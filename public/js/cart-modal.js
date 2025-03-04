@@ -55,6 +55,10 @@ $(document).ready(function () {
             });
     });
 
+    function formatCurrency(number) {
+        return number.toLocaleString('vi-VN');
+    }
+
     function renderCartItems(items) {
 
         $("#cart-container").empty()
@@ -79,6 +83,9 @@ $(document).ready(function () {
                         </strong>
                         <button id="delete-cart-item" data-id = ${
                             item.product_id ? item.product_id : item.product.id
+                        } 
+                        data-size = ${
+                            item.size ? item.size : item.product.size
                         } class="rounded-full group p-1 focus:outline-none">
                             <svg width="28" height="28" viewBox="0 0 34 34" fill="none"
                                 xmlns="http://www.w3.org/2000/svg">
@@ -95,6 +102,8 @@ $(document).ready(function () {
                         <div class="flex items-center gap-3">
                             <button id="btn-decrease-cart" data-id = ${
                                 item.product_id ? item.product_id : item.product.id
+                            } data-size = ${
+                                item.size ? item.size : item.product.size
                             } class="rounded-full border border-gray-300 p-1.5 
                                         bg-white hover:bg-gray-200 transition">
                                 <svg class="stroke-gray-900 w-4 h-4"
@@ -108,6 +117,8 @@ $(document).ready(function () {
                                     font-semibold text-sm bg-gray-100" min="1" value="${item.quantity}">
                             <button id="btn-increase-cart" data-id = ${
                                 item.product_id ? item.product_id : item.product.id
+                            } data-size = ${
+                                item.size ? item.size : item.product.size
                             } class="rounded-full border border-gray-300 p-1.5 
                                         bg-white hover:bg-gray-200 transition">
                                 <svg class="stroke-gray-900 w-4 h-4"
@@ -118,8 +129,8 @@ $(document).ready(function () {
                                 </svg>
                             </button>
                         </div>
-                        <h6 class="text-indigo-600 font-manrope font-bold text-lg">
-                            ${item.price}
+                        <h6 class="price-text text-indigo-600 font-manrope font-bold text-lg">
+                            ${formatCurrency(parseInt(item.price))}
                         </h6>
                     </div>
                 </div>
@@ -130,7 +141,10 @@ $(document).ready(function () {
     }
 
     $(document).on("click", "#delete-cart-item", function () {
+
         let productId = $(this).data("id");
+        let size = $(this).data('size');
+
         swal({
             title: translations.areYouSure,
             text: translations.deleteItem,
@@ -143,6 +157,7 @@ $(document).ready(function () {
                     url: `/home/product/delete/cart/${productId}`,
                     method: "POST",
                     data: {
+                        size: size,
                         _token: $('meta[name="csrf-token"]').attr("content"),
                     },
                     success: function (response) {
@@ -152,7 +167,16 @@ $(document).ready(function () {
                                 response.message,
                                 response.status
                             );
-                            $(`button[data-id="${productId}"]`)
+
+                            let currentValue = parseInt($('#cart-item-text').text()) || 0;
+
+                            if (currentValue > 0) {
+                                currentValue--;
+                            }
+
+                            $('#cart-item-text').text(currentValue);
+
+                            $(`button[data-id="${productId}"][data-size="${size}"]`)
                                 .closest(".rounded-xl")
                                 .remove();
 
@@ -205,13 +229,16 @@ $(document).ready(function () {
     $(document).on('click', '#btn-decrease-cart', function () {
 
         let productId = $(this).data('id');
+        let size = $(this).data('size');
         let inputElement = $(this).siblings('input');
         let quantity = 1;
+        let keyId = productId + '_' + size;
         $.ajax({
             url: `/home/product/update/cart/${productId}`,
             method: "POST",
             data: {
                 type: 2,
+                size: size,
                 _token: $('meta[name="csrf-token"]').attr("content"),
             },
             success: function (response) {
@@ -219,17 +246,24 @@ $(document).ready(function () {
                 if (response.data.quantity) {
 
                     quantity = response.data.quantity
+                    price = response.data.price;
+
 
                 } else {
 
-                    quantity = response.data[productId].quantity
+                    quantity = response.data[keyId].quantity
+                    price = response.data[keyId].price;
 
                 }
 
                 if (response.status == "success") {
 
                     inputElement.val(quantity)
-                    
+
+                    $(`button[data-id="${productId}"][data-size="${size}"]`)
+                    .closest(".justify-between")
+                    .find(".price-text")
+                    .text(formatCurrency(parseInt(price)));
                 }
             }
         });
@@ -240,11 +274,15 @@ $(document).ready(function () {
         let productId = $(this).data('id');
         let inputElement = $(this).siblings('input');
         let quantity = 1;
+        let size = $(this).data('size')
+        let keyId = productId + '_' + size;
+
         $.ajax({
             url: `/home/product/update/cart/${productId}`,
             method: "POST",
             data: {
                 type: 1,
+                size: size,
                 _token: $('meta[name="csrf-token"]').attr("content"),
             },
             success: function (response) {
@@ -252,17 +290,22 @@ $(document).ready(function () {
                 if (response.data.quantity) {
 
                     quantity = response.data.quantity
+                    price = response.data.price;
 
                 } else {
 
-                    quantity = response.data[productId].quantity
+                    quantity = response.data[keyId].quantity
+                    price = response.data[keyId].price;
 
                 }
 
                 if (response.status == "success") {
 
                     inputElement.val(quantity)
-
+                    $(`button[data-id="${productId}"][data-size="${size}"]`)
+                    .closest(".justify-between")
+                    .find(".price-text")
+                    .text(formatCurrency(parseInt(price)));
                 }
             }
         });

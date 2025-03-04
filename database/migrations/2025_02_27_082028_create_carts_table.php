@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->integer('user_id')->nullable();
             $table->integer('product_id')->nullable();
+            $table->integer('size');
             $table->integer('quantity');
             $table->integer('price');
             $table->timestamps();

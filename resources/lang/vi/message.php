@@ -110,5 +110,12 @@ return [
     'promo' => 'Mã khuyến mãi',
     'checkout' => 'Thanh toán',
     'cart-empty' => 'Giỏ hàng của bạn đang trống',
-    'go-store' => 'Đi đến cửa hàng'
+    'go-store' => 'Đi đến cửa hàng',
+    'home' => 'Trang chủ',
+    'all-product' => 'Tất cả sản phẩm',
+    'shoe-at' => 'Giày sân cỏ nhân tạo',
+    'shoe-ft' => 'Giày sân cỏ futsal',
+    'brand' => 'Thương hiệu',
+    'news' => 'Tin tức giày',
+    'contact' => 'Liên hệ',
 ];

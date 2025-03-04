@@ -1,5 +1,5 @@
 <x-app-layout>
-    <section class=" mt-10 py-12 bg-white">
+    <section class=" mt-32 py-12 bg-white">
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 lg:grid-cols-2">
                 <div class="slider-box w-full h-full max-lg:mx-auto mx-0 p-10">
@@ -53,7 +53,7 @@
                         <div class="flex flex-col min-[400px]:flex-row min-[400px]:items-center mb-8 gap-y-3">
                             <div class="flex items-center">
                                 <h5 class="font-manrope font-semibold text-2xl leading-9 text-gray-900 ">
-                                    {{ $data->price }}</h5>
+                                    {{ number_format($data->price, 0, ',', '.') }}</h5>
                                 <span class="ml-3 font-semibold text-lg text-indigo-600">30% off</span>
                             </div>
                             <svg class="mx-5 max-[400px]:hidden" xmlns="http://www.w3.org/2000/svg" width="2"
@@ -88,8 +88,8 @@
                         <p class="font-medium text-lg text-gray-900 mb-4">{{ trans('message.size') }}</p>
                         <div class="grid grid-cols-2 min-[400px]:grid-cols-4 gap-3 mb-3 min-[400px]:mb-8">
                             @foreach ($data->productSizes as $item)
-                                <button
-                                    class="border border-gray-200 whitespace-nowrap text-gray-900 text-sm leading-6 py-2.5 rounded-full px-5 text-center w-full font-semibold shadow-sm shadow-transparent transition-all duration-300 hover:bg-gray-50 hover:shadow-gray-300">{{ $item->size }}</button>
+                                <button data-size = {{$item->size}}
+                                    class="btn-choose-size border border-gray-200 whitespace-nowrap text-gray-900 text-sm leading-6 py-2.5 rounded-full px-5 text-center w-full font-semibold shadow-sm shadow-transparent transition-all duration-300 hover:bg-gray-50 hover:shadow-gray-300">{{ $item->size }}</button>
                             @endforeach
                         </div>
                         <div class="flex items-center flex-col min-[400px]:flex-row gap-3 mb-3 min-[400px]:mb-8">
@@ -328,8 +328,20 @@
         let wentWrong = `{{ trans('message.went-wrong') }}`;
         let selectRating = 0;
         let productId = $('#product-id').val();
+        let size;
+
         loadReview();
         let page = 1;
+
+        $('.btn-choose-size').on('click', function() {
+
+            size = $(this).data('size');
+
+            $('.btn-choose-size').removeClass('border-2 border-blue-600').addClass('border border-gray-200');
+
+            $(this).addClass('border-2 border-blue-600').removeClass('border border-gray-200');
+
+        })
 
         $('#btn-decrease').on('click', function() {
             let quantity = parseInt($('#quantity').val()); 
@@ -353,6 +365,7 @@
                 method: 'POST',
                 data: {
                     id: productId,
+                    size: size,
                     quantity: parseInt($('#quantity').val()),
                     _token: $('meta[name="csrf-token"]').attr('content')
                 },
@@ -361,7 +374,10 @@
                         $('#cart-item-text').text(response.countCart);
                         swal(goodJob, response.message, response.status);
                     }
-                }
+                },
+                error: function(response) {
+                    swal(Error, wentWrong, 'error');
+                },
             })
         })
 

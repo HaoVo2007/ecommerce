@@ -1,23 +1,36 @@
 <nav x-data="{ open: false }"
-    class="fixed top-0 right-0 left-0 h-16 z-50 bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700">
+    class="fixed top-0 right-0 left-0 h-auto z-50 bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between h-16">
-            <div class="flex">
+        <div class="flex items-center justify-center gap-20 h-20">
+            <div class="flex gap-5">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
                     <a href="{{ route('dashboard') }}">
-                        <x-application-logo class="block h-9 w-auto fill-current text-gray-800 dark:text-gray-200" />
+                        <img class="w-14 h-14" src="{{asset('/image/logo/logo.png')}}" alt="">
                     </a>
-                </div>
-
-                <!-- Navigation Links -->
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                        {{ __('Dashboard') }}
-                    </x-nav-link>
                 </div>
             </div>
 
+            <div class="flex justify-center items-center flex-grow">
+                <div class="w-full">
+                    <label for="default-search"
+                        class="text-sm font-medium text-gray-900 sr-only dark:text-white">{{trans('message.search')}}</label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                            <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
+                                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+                            </svg>
+                        </div>
+                        <input type="search" style="padding-left: 35px" id="key-word"
+                            class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            placeholder="{{trans('message.search-name')}}" required />
+                        <button id="btn-search" type="submit"
+                            class="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">{{trans('message.search')}}</button>
+                    </div>
+                </div>
+            </div>
             <!-- Settings Dropdown -->
             <div class="flex items-center justify-center">
                 @auth
@@ -160,6 +173,78 @@
                             stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                     </svg>
                 </button>
+            </div>
+        </div>
+        <div class="flex justify-center items-center">
+            <div class="container justify-center flex items-center p-5">
+                <!-- Main Navigation -->
+                <ul class="flex space-x-8 gap-4">
+                    <li><a href="#" class="text-blue-500 font-medium uppercase">{{trans('message.home')}}</a></li>
+
+                    <li><a href="#" class="text-gray-700 font-medium uppercase">{{trans('message.all-product')}}</a></li>
+
+                    <li class="dropdown relative"><a href="#" class="text-gray-700 font-medium uppercase">{{trans('message.shoe-at')}}</a>
+                        <div class="dropdown-content mt-2 py-3">
+                            @foreach ($categories as $item)
+                            <a href="#" class="uppercase block px-4 py-2 text-gray-600 hover:bg-gray-100 flex items-center">
+                                {{$item->name}}
+                            </a>
+                            @endforeach
+                        </div>
+                    </li>
+
+                    <li class="dropdown relative"><a href="#" class="uppercase text-gray-700 font-medium">{{trans('message.shoe-ft')}}</a>
+                        <div class="dropdown-content mt-2 py-3">
+                            @foreach ($categories as $item)
+                            <a href="#" class="uppercase block px-4 py-2 text-gray-600 hover:bg-gray-100 flex items-center">
+                                {{$item->name}}
+                            </a>
+                            @endforeach
+                        </div>
+                    </li>
+
+                    <li class="dropdown relative">
+                        <a href="#" class="uppercase text-gray-700 font-medium flex items-center">
+                            {{trans('message.brand')}}
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </a>
+                        <div class="dropdown-content mt-2 py-3">
+                            
+                            @foreach ($categories as $item)
+
+                                @if ($item->children->isNotEmpty())
+                                    <div class="nested-dropdown relative">
+                                        <a href="#" class="uppercase block px-4 py-2 text-gray-600 hover:bg-gray-100 flex items-center justify-between">
+                                            <div class="flex items-center">
+                                                {{$item->name}}
+                                            </div>
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                                            </svg>
+                                        </a>
+
+                                        <div class="nested-dropdown-content py-3">
+                                            @foreach ($item->children as $item)
+                                                <a href="#" class="uppercase block px-4 py-2 text-gray-600 hover:bg-gray-100">{{$item->name}}</a>
+                                            @endforeach
+                                        </div>
+
+                                    </div>
+                                @else
+                                <a href="#" class="uppercase block px-4 py-2 text-gray-600 hover:bg-gray-100 flex items-center">
+                                    {{$item->name}}
+                                </a>
+                                @endif
+                            @endforeach
+
+                        </div>
+                    </li>
+                    
+                    <li><a href="#" class="text-gray-700 font-medium uppercase">{{trans('message.news')}}</a></li>
+                    <li><a href="#" class="text-gray-700 font-medium uppercase">{{trans('message.contact')}}</a></li>
+                </ul>
             </div>
         </div>
     </div>
