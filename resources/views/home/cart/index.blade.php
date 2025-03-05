@@ -159,6 +159,8 @@
     <script>
         $(document).ready(function() {
 
+            $('#btn-modal-cart').hide();
+            
             function formatCurrency(number) {
                 return number.toLocaleString('vi-VN');
             }

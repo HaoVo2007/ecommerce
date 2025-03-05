@@ -163,7 +163,7 @@
 </style>
 
 <body class="font-sans antialiased">
-    <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
+    <div class="min-h-screen dark:bg-gray-900">
         @include('layouts.navigation')
 
         <!-- Page Heading -->
@@ -179,6 +179,21 @@
         <main>
             {{ $slot }}
         </main>
+
+        @if (Auth::user())
+            @if (Auth::user()->user_type != 1)
+                <footer class="mt-12 bg-white">
+                    @include('layouts.footer')
+                </footer> 
+            @endif
+        @else
+            <footer class="bg-white">
+                @include('layouts.footer')
+            </footer>
+        @endif
+
+
+
     </div>
     <script>
         var translations = {
@@ -190,6 +205,7 @@
             wentWrong: "{{ trans('message.went-wrong') }}",
             cartEmpty: "{{ trans('message.cart-empty') }}",
             goStore: "{{ trans('message.go-store') }}",
+            size: "{{ trans('message.size') }}",
         };
     </script>
     <script src="{{ asset('js/cart-modal.js') }}"></script>

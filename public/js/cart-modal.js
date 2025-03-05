@@ -98,6 +98,12 @@ $(document).ready(function () {
                         </button>
                     </div>
 
+                    <div clas="flex items-center justify-center gap-2">
+                        <h6 class="font-normal text-base leading-7 text-gray-500">
+                            ${translations.size}: ${item.size ? item.size : item.product.size}
+                        </h6>
+                    </div>
+                    
                     <div class="flex justify-between items-center mt-2">
                         <div class="flex items-center gap-3">
                             <button id="btn-decrease-cart" data-id = ${

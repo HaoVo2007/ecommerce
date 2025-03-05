@@ -1,7 +1,7 @@
 <nav x-data="{ open: false }"
     class="fixed top-0 right-0 left-0 h-auto z-50 bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex items-center justify-center gap-20 h-20">
+        <div class="flex items-center justify-between gap-20 h-20">
             <div class="flex gap-5">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
@@ -11,30 +11,55 @@
                 </div>
             </div>
 
-            <div class="flex justify-center items-center flex-grow">
-                <div class="w-full">
-                    <label for="default-search"
-                        class="text-sm font-medium text-gray-900 sr-only dark:text-white">{{trans('message.search')}}</label>
-                    <div class="relative">
-                        <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-                            <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
-                                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                    stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
-                            </svg>
+            @auth
+                @if (Auth::user()->user_type != 1)
+                    <div class="hidden sm:flex justify-center items-center flex-grow">
+                        <div class="w-full">
+                            <label for="default-search"
+                                class="text-sm font-medium text-gray-900 sr-only dark:text-white">{{trans('message.search')}}</label>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                                    <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
+                                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                            stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+                                    </svg>
+                                </div>
+                                <input type="search" style="padding-left: 35px" id="key-word"
+                                    class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                    placeholder="{{trans('message.search-name')}}" required />
+                                <button id="btn-search" type="submit"
+                                    class="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">{{trans('message.search')}}</button>
+                            </div>
                         </div>
-                        <input type="search" style="padding-left: 35px" id="key-word"
-                            class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            placeholder="{{trans('message.search-name')}}" required />
-                        <button id="btn-search" type="submit"
-                            class="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">{{trans('message.search')}}</button>
+                    </div>                    
+                @endif
+            @else
+                <div class="hidden sm:flex justify-center items-center flex-grow">
+                    <div class="w-full">
+                        <label for="default-search"
+                            class="text-sm font-medium text-gray-900 sr-only dark:text-white">{{trans('message.search')}}</label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                                <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
+                                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                        stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+                                </svg>
+                            </div>
+                            <input type="search" style="padding-left: 35px" id="key-word"
+                                class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                placeholder="{{trans('message.search-name')}}" required />
+                            <button id="btn-search" type="submit"
+                                class="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">{{trans('message.search')}}</button>
+                        </div>
                     </div>
                 </div>
-            </div>
+            @endauth
             <!-- Settings Dropdown -->
             <div class="flex items-center justify-center">
                 @auth
-                    <div class="hidden sm:flex sm:items-center">
+                    <div class="flex items-center">
                         <x-dropdown align="right" width="48">
                             <x-slot name="trigger">
                                 <button
@@ -69,7 +94,7 @@
                         </x-dropdown>
                     </div>
                 @else
-                    <div class="hidden sm:flex sm:items-center">
+                    <div class="flex items-center">
                         <x-dropdown align="right" width="48">
                             <x-slot name="trigger">
                                 <button
@@ -96,41 +121,79 @@
                         </x-dropdown>
                     </div>
                 @endauth
-                <div class="relative hidden sm:flex sm:items-center">
+                
+                @auth
+                    @if (Auth::user()->user_type != 1)
+                        <div class="relative flex items-center">
+                            <button id="btn-modal-cart"
+                                class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150">
+                                <div class="relative">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                        stroke-width="1.5" stroke="currentColor" class="size-6">
+                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                            d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
+                                    </svg>
+                                    <span id="cart-item-text"
+                                        class="absolute -top-2 -right-2 text-xs px-2 py-1 bg-blue-400 text-white rounded-full text-center leading-none">{{ session('countCart', 0) }}</span>
+                            </button>
 
-                    <button id="btn-modal-cart"
-                        class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150">
-                        <div class="relative">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                stroke-width="1.5" stroke="currentColor" class="size-6">
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                    d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
-                            </svg>
-                            <span id="cart-item-text"
-                                class="absolute -top-2 -right-2 text-xs px-2 py-1 bg-blue-400 text-white rounded-full text-center leading-none">{{ session('countCart', 0) }}</span>
-                    </button>
+                            <div id="modal-cart" class="hidden fixed sm:absolute sm:w-[450px] w-full h-auto rounded-3xl border-2 border-gray-200 bg-white shadow-lg top-14 z-50 right-0 p-4">
+                                <div class="w-full px-3">
+                                    <h2 class="font-manrope font-bold text-2xl text-center text-black mb-4">
+                                        {{trans('message.shop-cart')}}
+                                    </h2>
+                                    <div id="cart-container" class="max-h-[330px] overflow-y-auto pr-1">
+                                        <!-- Cart items -->
+                                    </div>
+                                </div>
+                                <div class="max-lg:max-w-lg max-lg:mx-auto">
+                                    <a href="/home/product/cart" id="btn-view-cart">
+                                        <button class="rounded-full py-4 px-6 bg-indigo-600 text-white font-semibold text-lg w-full text-center transition-all duration-500 hover:bg-indigo-700">
+                                            {{trans('message.view-cart')}}
+                                        </button>
+                                    </a>
+                                </div>
+                            </div>
+                            
+                        </div> 
+                    @endif
 
-                    <div id="modal-cart" class="hidden w-[450px] h-auto absolute rounded-3xl border-2 border-gray-200 bg-white shadow-lg top-12 z-10 right-0 p-4">
-                        <div class="w-full px-3">
-                            <h2 class="font-manrope font-bold text-2xl text-center text-black mb-4">
-                                {{trans('message.shop-cart')}}
-                            </h2>
-                            <div id="cart-container" class="max-h-[330px] overflow-y-auto pr-1">
+                @else
+                    <div class="relative flex items-center">
+                        <button id="btn-modal-cart"
+                            class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150">
+                            <div class="relative">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                    stroke-width="1.5" stroke="currentColor" class="size-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
+                                </svg>
+                                <span id="cart-item-text"
+                                    class="absolute -top-2 -right-2 text-xs px-2 py-1 bg-blue-400 text-white rounded-full text-center leading-none">{{ session('countCart', 0) }}</span>
+                        </button>
 
+                        <div id="modal-cart" class="hidden fixed sm:absolute sm:w-[450px] w-full h-auto rounded-3xl border-2 border-gray-200 bg-white shadow-lg top-14 z-50 right-0 p-4">
+                            <div class="w-full px-3">
+                                <h2 class="font-manrope font-bold text-2xl text-center text-black mb-4">
+                                    {{trans('message.shop-cart')}}
+                                </h2>
+                                <div id="cart-container" class="max-h-[330px] overflow-y-auto pr-1">
+                                    <!-- Cart items -->
+                                </div>
+                            </div>
+                            <div class="max-lg:max-w-lg max-lg:mx-auto">
+                                <a href="/home/product/cart" id="btn-view-cart">
+                                    <button class="rounded-full py-4 px-6 bg-indigo-600 text-white font-semibold text-lg w-full text-center transition-all duration-500 hover:bg-indigo-700">
+                                        {{trans('message.view-cart')}}
+                                    </button>
+                                </a>
                             </div>
                         </div>
-                        <div class="max-lg:max-w-lg max-lg:mx-auto">
-                            <a href="/home/product/cart" id="btn-view-cart">
-                                <button
-                                    class="rounded-full py-4 px-6 bg-indigo-600 text-white font-semibold text-lg w-full text-center transition-all duration-500 hover:bg-indigo-700 ">{{trans('message.view-cart')}}
-                                </button>
-                            </a>
-                        </div>
-                    </div>
-                    
-                </div>
+                        
+                    </div>    
+                @endauth
 
-                <div class="hidden sm:flex sm:items-center">
+                <div class="flex items-center">
                     <x-dropdown align="right" width="48">
                         <x-slot name="trigger">
                             <button
@@ -160,90 +223,268 @@
                         </x-slot>
                     </x-dropdown>
                 </div>
-            </div>
 
-            <div class="-me-2 flex items-center sm:hidden">
-                <button @click="open = ! open"
-                    class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 dark:text-gray-500 hover:text-gray-500 dark:hover:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-900 focus:outline-none transition duration-150 ease-in-out">
-                    <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
-                        <path :class="{ 'hidden': open, 'inline-flex': !open }" class="inline-flex"
-                            stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M4 6h16M4 12h16M4 18h16" />
-                        <path :class="{ 'hidden': !open, 'inline-flex': open }" class="hidden" stroke-linecap="round"
-                            stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                </button>
+                    
+                <div class="-me-2 flex items-center sm:hidden">
+                    <button @click="open = ! open"
+                        class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 dark:text-gray-500 hover:text-gray-500 dark:hover:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-900 focus:outline-none transition duration-150 ease-in-out">
+                        <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
+                            <path :class="{ 'hidden': open, 'inline-flex': !open }" class="inline-flex"
+                                stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 6h16M4 12h16M4 18h16" />
+                            <path :class="{ 'hidden': !open, 'inline-flex': open }" class="hidden" stroke-linecap="round"
+                                stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
             </div>
         </div>
-        <div class="flex justify-center items-center">
-            <div class="container justify-center flex items-center p-5">
-                <!-- Main Navigation -->
-                <ul class="flex space-x-8 gap-4">
-                    <li><a href="#" class="text-blue-500 font-medium uppercase">{{trans('message.home')}}</a></li>
+        
+        @auth
+            @if (Auth::user()->user_type == 1)
+                
+            @else
+                <div class="hidden sm:block justify-center items-center">
+                    <div class="container justify-center flex items-center p-5">
+                        <!-- Main Navigation -->
+                        <ul class="flex space-x-8 gap-4">
+                            <li><a href="#" class="text-blue-500 font-medium uppercase">{{trans('message.home')}}</a></li>
 
-                    <li><a href="#" class="text-gray-700 font-medium uppercase">{{trans('message.all-product')}}</a></li>
+                            <li><a href="#" class="text-gray-700 font-medium uppercase">{{trans('message.all-product')}}</a></li>
 
-                    <li class="dropdown relative"><a href="#" class="text-gray-700 font-medium uppercase">{{trans('message.shoe-at')}}</a>
-                        <div class="dropdown-content mt-2 py-3">
-                            @foreach ($categories as $item)
-                            <a href="#" class="uppercase block px-4 py-2 text-gray-600 hover:bg-gray-100 flex items-center">
-                                {{$item->name}}
-                            </a>
-                            @endforeach
-                        </div>
-                    </li>
+                            <li class="dropdown relative"><a href="#" class="text-gray-700 font-medium uppercase">{{trans('message.shoe-at')}}</a>
+                                <div class="dropdown-content mt-2 py-3">
+                                    @foreach ($categories as $item)
+                                    <a href="#" class="uppercase block px-4 py-2 text-gray-600 hover:bg-gray-100 flex items-center">
+                                        {{$item->name}}
+                                    </a>
+                                    @endforeach
+                                </div>
+                            </li>
 
-                    <li class="dropdown relative"><a href="#" class="uppercase text-gray-700 font-medium">{{trans('message.shoe-ft')}}</a>
-                        <div class="dropdown-content mt-2 py-3">
-                            @foreach ($categories as $item)
-                            <a href="#" class="uppercase block px-4 py-2 text-gray-600 hover:bg-gray-100 flex items-center">
-                                {{$item->name}}
-                            </a>
-                            @endforeach
-                        </div>
-                    </li>
+                            <li class="dropdown relative"><a href="#" class="uppercase text-gray-700 font-medium">{{trans('message.shoe-ft')}}</a>
+                                <div class="dropdown-content mt-2 py-3">
+                                    @foreach ($categories as $item)
+                                    <a href="#" class="uppercase block px-4 py-2 text-gray-600 hover:bg-gray-100 flex items-center">
+                                        {{$item->name}}
+                                    </a>
+                                    @endforeach
+                                </div>
+                            </li>
 
-                    <li class="dropdown relative">
-                        <a href="#" class="uppercase text-gray-700 font-medium flex items-center">
-                            {{trans('message.brand')}}
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                            </svg>
-                        </a>
-                        <div class="dropdown-content mt-2 py-3">
-                            
-                            @foreach ($categories as $item)
+                            <li class="dropdown relative">
+                                <a href="#" class="uppercase text-gray-700 font-medium flex items-center">
+                                    {{trans('message.brand')}}
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                                    </svg>
+                                </a>
+                                <div class="dropdown-content mt-2 py-3">
+                                    
+                                    @foreach ($categories as $item)
 
-                                @if ($item->children->isNotEmpty())
-                                    <div class="nested-dropdown relative">
-                                        <a href="#" class="uppercase block px-4 py-2 text-gray-600 hover:bg-gray-100 flex items-center justify-between">
-                                            <div class="flex items-center">
-                                                {{$item->name}}
+                                        @if ($item->children->isNotEmpty())
+                                            <div class="nested-dropdown relative">
+                                                <a href="#" class="uppercase block px-4 py-2 text-gray-600 hover:bg-gray-100 flex items-center justify-between">
+                                                    <div class="flex items-center">
+                                                        {{$item->name}}
+                                                    </div>
+                                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                                                    </svg>
+                                                </a>
+
+                                                <div class="nested-dropdown-content py-3">
+                                                    @foreach ($item->children as $item)
+                                                        <a href="#" class="uppercase block px-4 py-2 text-gray-600 hover:bg-gray-100">{{$item->name}}</a>
+                                                    @endforeach
+                                                </div>
+
                                             </div>
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                                            </svg>
+                                        @else
+                                        <a href="#" class="uppercase block px-4 py-2 text-gray-600 hover:bg-gray-100 flex items-center">
+                                            {{$item->name}}
                                         </a>
+                                        @endif
+                                    @endforeach
 
-                                        <div class="nested-dropdown-content py-3">
-                                            @foreach ($item->children as $item)
-                                                <a href="#" class="uppercase block px-4 py-2 text-gray-600 hover:bg-gray-100">{{$item->name}}</a>
-                                            @endforeach
-                                        </div>
+                                </div>
+                            </li>
+                            
+                            <li><a href="#" class="text-gray-700 font-medium uppercase">{{trans('message.news')}}</a></li>
+                            <li><a href="#" class="text-gray-700 font-medium uppercase">{{trans('message.contact')}}</a></li>
+                        </ul>
+                    </div>
+                </div>
+            @endif
+        @else
+            <div class="hidden sm:block justify-center items-center">
+                <div class="container justify-center flex items-center p-5">
+                    <!-- Main Navigation -->
+                    <ul class="flex space-x-8 gap-4">
+                        <li><a href="#" class="text-blue-500 font-medium uppercase">{{trans('message.home')}}</a></li>
 
-                                    </div>
-                                @else
+                        <li><a href="#" class="text-gray-700 font-medium uppercase">{{trans('message.all-product')}}</a></li>
+
+                        <li class="dropdown relative"><a href="#" class="text-gray-700 font-medium uppercase">{{trans('message.shoe-at')}}</a>
+                            <div class="dropdown-content mt-2 py-3">
+                                @foreach ($categories as $item)
                                 <a href="#" class="uppercase block px-4 py-2 text-gray-600 hover:bg-gray-100 flex items-center">
                                     {{$item->name}}
                                 </a>
-                                @endif
-                            @endforeach
+                                @endforeach
+                            </div>
+                        </li>
 
+                        <li class="dropdown relative"><a href="#" class="uppercase text-gray-700 font-medium">{{trans('message.shoe-ft')}}</a>
+                            <div class="dropdown-content mt-2 py-3">
+                                @foreach ($categories as $item)
+                                <a href="#" class="uppercase block px-4 py-2 text-gray-600 hover:bg-gray-100 flex items-center">
+                                    {{$item->name}}
+                                </a>
+                                @endforeach
+                            </div>
+                        </li>
+
+                        <li class="dropdown relative">
+                            <a href="#" class="uppercase text-gray-700 font-medium flex items-center">
+                                {{trans('message.brand')}}
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                                </svg>
+                            </a>
+                            <div class="dropdown-content mt-2 py-3">
+                                
+                                @foreach ($categories as $item)
+
+                                    @if ($item->children->isNotEmpty())
+                                        <div class="nested-dropdown relative">
+                                            <a href="#" class="uppercase block px-4 py-2 text-gray-600 hover:bg-gray-100 flex items-center justify-between">
+                                                <div class="flex items-center">
+                                                    {{$item->name}}
+                                                </div>
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                                                </svg>
+                                            </a>
+
+                                            <div class="nested-dropdown-content py-3">
+                                                @foreach ($item->children as $item)
+                                                    <a href="#" class="uppercase block px-4 py-2 text-gray-600 hover:bg-gray-100">{{$item->name}}</a>
+                                                @endforeach
+                                            </div>
+
+                                        </div>
+                                    @else
+                                    <a href="#" class="uppercase block px-4 py-2 text-gray-600 hover:bg-gray-100 flex items-center">
+                                        {{$item->name}}
+                                    </a>
+                                    @endif
+                                @endforeach
+
+                            </div>
+                        </li>
+                        
+                        <li><a href="#" class="text-gray-700 font-medium uppercase">{{trans('message.news')}}</a></li>
+                        <li><a href="#" class="text-gray-700 font-medium uppercase">{{trans('message.contact')}}</a></li>
+                    </ul>
+                </div>
+            </div>
+        @endauth
+
+
+        <div x-show="open" class="sm:hidden">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                <ul class="flex flex-col space-y-4">
+                    <li>
+                        <a href="#" class="block text-blue-500 font-medium uppercase">
+                            {{ trans('message.home') }}
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="block text-gray-700 font-medium uppercase">
+                            {{ trans('message.all-product') }}
+                        </a>
+                    </li>
+                    <li class="relative" x-data="{ openShoeAt: false }">
+                        <button @click="openShoeAt = !openShoeAt"
+                                class="w-full text-left text-gray-700 font-medium uppercase">
+                            {{ trans('message.shoe-at') }}
+                        </button>
+                        <div x-show="openShoeAt" x-cloak class="mt-2 py-3 bg-white shadow-lg">
+                            @foreach ($categories as $item)
+                                <a href="#"
+                                   class="block px-4 py-2 text-gray-600 hover:bg-gray-100">
+                                    {{ $item->name }}
+                                </a>
+                            @endforeach
                         </div>
                     </li>
-                    
-                    <li><a href="#" class="text-gray-700 font-medium uppercase">{{trans('message.news')}}</a></li>
-                    <li><a href="#" class="text-gray-700 font-medium uppercase">{{trans('message.contact')}}</a></li>
+                    <li class="relative" x-data="{ openShoeFt: false }">
+                        <button @click="openShoeFt = !openShoeFt"
+                                class="w-full text-left uppercase text-gray-700 font-medium">
+                            {{ trans('message.shoe-ft') }}
+                        </button>
+                        <div x-show="openShoeFt" x-cloak class="mt-2 py-3 bg-white shadow-lg">
+                            @foreach ($categories as $item)
+                                <a href="#"
+                                   class="block px-4 py-2 text-gray-600 hover:bg-gray-100">
+                                    {{ $item->name }}
+                                </a>
+                            @endforeach
+                        </div>
+                    </li>
+                    <li class="relative" x-data="{ openBrand: false }">
+                        <button @click="openBrand = !openBrand"
+                                class="w-full text-left uppercase text-gray-700 font-medium flex items-center">
+                            {{ trans('message.brand') }}
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none"
+                                 viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                      d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </button>
+                        <div x-show="openBrand" x-cloak class="mt-2 py-3 bg-white shadow-lg">
+                            @foreach ($categories as $item)
+                                @if ($item->children->isNotEmpty())
+                                    <div class="relative" x-data="{ openNested: false }">
+                                        <button @click="openNested = !openNested"
+                                                class="w-full text-left uppercase block px-4 py-2 text-gray-600 hover:bg-gray-100 flex items-center justify-between">
+                                            <span>{{ $item->name }}</span>
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none"
+                                                 viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                      d="M9 5l7 7-7 7" />
+                                            </svg>
+                                        </button>
+                                        <div x-show="openNested" x-cloak class="mt-2 py-3 bg-white shadow-lg">
+                                            @foreach ($item->children as $child)
+                                                <a href="#"
+                                                   class="block px-4 py-2 text-gray-600 hover:bg-gray-100">
+                                                    {{ $child->name }}
+                                                </a>
+                                            @endforeach
+                                        </div>
+                                    </div>
+                                @else
+                                    <a href="#"
+                                       class="block px-4 py-2 text-gray-600 hover:bg-gray-100">
+                                        {{ $item->name }}
+                                    </a>
+                                @endif
+                            @endforeach
+                        </div>
+                    </li>
+                    <li>
+                        <a href="#" class="block text-gray-700 font-medium uppercase">
+                            {{ trans('message.news') }}
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="block text-gray-700 font-medium uppercase">
+                            {{ trans('message.contact') }}
+                        </a>
+                    </li>
                 </ul>
             </div>
         </div>

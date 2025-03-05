@@ -1,36 +1,35 @@
 <x-app-layout>
-    <section class=" mt-32 py-12 bg-white">
+    <section class="mt-12 sm:mt-32 py-12 bg-white">
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 lg:grid-cols-2">
-                <div class="slider-box w-full h-full max-lg:mx-auto mx-0 p-10">
-                    <div class="swiper main-slide-carousel swiper-container relative mb-6">
+                <div class="slider-box w-full h-full mx-auto p-4 lg:p-10">
+                    <div class="swiper main-slide-carousel swiper-container relative mb-3 sm:mb-6">
                         <div class="swiper-wrapper">
                             @foreach ($data->subImage as $item)
                                 <div class="swiper-slide">
-                                    <div class="block">
-                                        <img src="/storage/{{ $item->image_url }}"
-                                            class="max-lg:mx-auto rounded-2xl object-cover">
-                                    </div>
+                                    <img src="/storage/{{ $item->image_url }}" 
+                                        class="w-full h-auto rounded-2xl object-cover max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl">
                                 </div>
                             @endforeach
                         </div>
                     </div>
-                    <div class="nav-for-slider ">
-                        <div class="swiper-wrapper">
+                    <div class="nav-for-slider flex space-x-2 justify-center">
+                        <div class="swiper-wrapper" style="padding: 0px !important;">
                             @foreach ($data->subImage as $item)
                                 <div class="swiper-slide thumbs-slide">
-                                    <img src="/storage/{{ $item->image_url }}"
-                                        class="max-lg:mx-auto rounded-2xl object-cover">
+                                    <img src="/storage/{{ $item->image_url }}" 
+                                        class="w-20 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 rounded-2xl object-cover">
                                 </div>
                             @endforeach
                         </div>
                     </div>
                 </div>
+
                 <div class="flex justify-center items-center">
                     <div class="pro-detail w-full max-lg:max-w-[608px] lg:pl-8 xl:pl-16 max-lg:mx-auto max-lg:mt-8">
-                        <div class="flex items-center justify-between gap-6 mb-6">
+                        <div class="flex items-center justify-between sm:gap-6 gap-2 mb-6">
                             <div class="text">
-                                <h2 class="font-manrope font-bold text-3xl leading-10 text-gray-900 mb-2">
+                                <h2 class="font-manrope font-bold text-md sm:text-3xl leading-10 text-gray-900 mb-2">
                                     {{ $data->name }}
                                 </h2>
                                 <p class="font-normal text-base text-gray-500">{{ $data->category->name }}</p>
@@ -50,7 +49,7 @@
                             </button>
                         </div>
 
-                        <div class="flex flex-col min-[400px]:flex-row min-[400px]:items-center mb-8 gap-y-3">
+                        <div class="flex flex-row mb-8 gap-6 sm:gap-y-3">
                             <div class="flex items-center">
                                 <h5 class="font-manrope font-semibold text-2xl leading-9 text-gray-900 ">
                                     {{ number_format($data->price, 0, ',', '.') }}</h5>
@@ -88,7 +87,7 @@
                         <p class="font-medium text-lg text-gray-900 mb-4">{{ trans('message.size') }}</p>
                         <div class="grid grid-cols-2 min-[400px]:grid-cols-4 gap-3 mb-3 min-[400px]:mb-8">
                             @foreach ($data->productSizes as $item)
-                                <button data-size = {{$item->size}}
+                                <button data-size={{ $item->size }}
                                     class="btn-choose-size border border-gray-200 whitespace-nowrap text-gray-900 text-sm leading-6 py-2.5 rounded-full px-5 text-center w-full font-semibold shadow-sm shadow-transparent transition-all duration-300 hover:bg-gray-50 hover:shadow-gray-300">{{ $item->size }}</button>
                             @endforeach
                         </div>
@@ -131,54 +130,64 @@
                                         d="M10.7394 17.875C10.7394 18.6344 10.1062 19.25 9.32511 19.25C8.54402 19.25 7.91083 18.6344 7.91083 17.875M16.3965 17.875C16.3965 18.6344 15.7633 19.25 14.9823 19.25C14.2012 19.25 13.568 18.6344 13.568 17.875M4.1394 5.5L5.46568 12.5908C5.73339 14.0221 5.86724 14.7377 6.37649 15.1605C6.88573 15.5833 7.61377 15.5833 9.06984 15.5833H15.2379C16.6941 15.5833 17.4222 15.5833 17.9314 15.1605C18.4407 14.7376 18.5745 14.0219 18.8421 12.5906L19.3564 9.84059C19.7324 7.82973 19.9203 6.8243 19.3705 6.16215C18.8207 5.5 17.7979 5.5 15.7522 5.5H4.1394ZM4.1394 5.5L3.66797 2.75"
                                         stroke="" stroke-width="1.6" stroke-linecap="round" />
                                 </svg>
-                                {{trans('message.add-to-cart')}}
+                                {{ trans('message.add-to-cart') }}
                             </button>
                         </div>
                         <button
                             class="text-center w-full px-5 py-4 rounded-[100px] bg-indigo-600 flex items-center justify-center font-semibold text-lg text-white shadow-sm shadow-transparent transition-all duration-500 hover:bg-indigo-700 hover:shadow-indigo-300">
-                            {{trans('message.buy-now')}}
+                            {{ trans('message.buy-now') }}
                         </button>
                     </div>
                 </div>
             </div>
         </div>
-    </section>              
+    </section>
 
-    <div class="tabs bg-white p-10">
-        <div class="flex ">
-            <ul class="flex min-w-max overflow-x-auto transition-all duration-300 overflow-hidden">
+    <div class="tabs bg-white sm:p-10 p-4">
+
+        <div class="flex overflow-x-auto scrollbar scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
+            <ul class="flex min-w-max">
                 <li>
                     <a href="javascript:void(0)"
-                        class="uppercase text-lg flex items-center py-3 px-6 text-gray-500 border-b-2 border-transparent hover:text-gray-800 font-medium tab-active:text-indigo-600 tab-active:border-b-indigo-600 active tablink whitespace-nowrap"
+                        class="uppercase text-sm sm:text-lg flex items-center py-2 sm:py-3 px-3 sm:px-6 text-gray-500 border-b-2 border-transparent hover:text-gray-800 font-medium tab-active:text-indigo-600 tab-active:border-b-indigo-600 active tablink whitespace-nowrap"
                         data-tab="tabs-with-badge-1" role="tab">
-                        {{trans('message.review-product')}}
+                        {{ trans('message.review-product') }}
                     </a>
                 </li>
                 <li>
                     <a href="javascript:void(0)"
-                        class="uppercase text-lg flex items-center py-3 px-6 text-gray-500 border-b-2 border-transparent hover:text-gray-800 font-medium tab-active:text-indigo-600 tab-active:border-b-indigo-600 tablink whitespace-nowrap"
-                        data-tab="tabs-with-badge-2" role="tab">{{trans('message.description-product')}}</a>
+                        class="uppercase text-sm sm:text-lg flex items-center py-2 sm:py-3 px-3 sm:px-6 text-gray-500 border-b-2 border-transparent hover:text-gray-800 font-medium tab-active:text-indigo-600 tab-active:border-b-indigo-600 tablink whitespace-nowrap"
+                        data-tab="tabs-with-badge-2" role="tab">
+                        {{ trans('message.description-product') }}
+                    </a>
                 </li>
                 <li>
                     <a href="javascript:void(0)"
-                        class="uppercase text-lg flex items-center py-3 px-6 text-gray-500 border-b-2 border-transparent hover:text-gray-800 font-medium tab-active:text-indigo-600 tab-active:border-b-indigo-600 tablink whitespace-nowrap"
-                        data-tab="tabs-with-badge-3" role="tab">{{trans('message.warranty-policy')}}</a>
+                        class="uppercase text-sm sm:text-lg flex items-center py-2 sm:py-3 px-3 sm:px-6 text-gray-500 border-b-2 border-transparent hover:text-gray-800 font-medium tab-active:text-indigo-600 tab-active:border-b-indigo-600 tablink whitespace-nowrap"
+                        data-tab="tabs-with-badge-3" role="tab">
+                        {{ trans('message.warranty-policy') }}
+                    </a>
                 </li>
                 <li>
                     <a href="javascript:void(0)"
-                        class="uppercase text-lg flex items-center py-3 px-6 text-gray-500 border-b-2 border-transparent hover:text-gray-800 font-medium tab-active:text-indigo-600 tab-active:border-b-indigo-600 tablink whitespace-nowrap"
-                        data-tab="tabs-with-badge-4" role="tab">{{trans('message.shoe-tip')}}</a>
+                        class="uppercase text-sm sm:text-lg flex items-center py-2 sm:py-3 px-3 sm:px-6 text-gray-500 border-b-2 border-transparent hover:text-gray-800 font-medium tab-active:text-indigo-600 tab-active:border-b-indigo-600 tablink whitespace-nowrap"
+                        data-tab="tabs-with-badge-4" role="tab">
+                        {{ trans('message.shoe-tip') }}
+                    </a>
                 </li>
             </ul>
         </div>
+
+
         <div class="mt-3">
-            <div id="tabs-with-badge-1" role="tabpanel" aria-labelledby="tabs-with-badge-item-1"
-                class="tabcontent">
+            <div id="tabs-with-badge-1" role="tabpanel" aria-labelledby="tabs-with-badge-item-1" class="tabcontent">
                 <section class="bg-white">
-                    <div class="pl-[150px] pr-[150px]">
-                        <div class="flex items-start gap-10 w-full">
-                            <div class="bg-white p-6 rounded-lg border w-full h-auto basis-1/3">
-                                <h2 class="text-xl font-semibold mb-4 text-gray-800">{{ trans('message.avg-review') }}</h2>
+                    <div class="px-4 sm:px-10 md:px-20 lg:px-[150px]">
+                        <div class="flex flex-wrap md:flex-nowrap items-start gap-5 md:gap-10 w-full">
+                            <div class="bg-white p-6 rounded-lg border w-full md:w-1/3">
+                                <h2 class="text-xl font-semibold mb-4 text-gray-800">
+                                    {{ trans('message.avg-review') }}
+                                </h2>
                                 <div class="flex items-center mb-4">
                                     <span class="text-2xl font-bold text-yellow-500 mr-2">{{ $avgReview }}</span>
                                     <div class="flex">
@@ -190,55 +199,77 @@
                                         <div class="flex items-center gap-2">
                                             <span class="w-12 text-gray-600">{{ $star }}</span>
                                             <div class="w-full bg-gray-200 rounded-full h-2">
-                                                <div class="bg-blue-800 h-2 rounded-full" style="width: {{ $percent }}%;">
-                                                </div>
+                                                <div class="bg-blue-800 h-2 rounded-full"
+                                                    style="width: {{ $percent }}%;"></div>
                                             </div>
                                             <span class="text-gray-600">{{ $percent }}%</span>
                                         </div>
                                     @endforeach
                                 </div>
                             </div>
-                            <div class="bg-white rounded-lg border w-full basis-2/3 p-6">
-                                <h2 class="text-xl font-semibold mb-4 text-gray-800">{{ trans('message.submit-review') }}</h2>
+
+                            <div class="bg-white rounded-lg border w-full md:w-2/3 p-6">
+                                <h2 class="text-xl font-semibold mb-4 text-gray-800">
+                                    {{ trans('message.submit-review') }}
+                                </h2>
                                 <form class="space-y-4">
                                     <div>
                                         <div class="flex gap-4 items-center">
-                                            <label class="block text-sm text-gray-600">{{ trans('message.add-review') }}</label>
+                                            <label
+                                                class="block text-sm text-gray-600">{{ trans('message.add-review') }}</label>
                                             <div class="flex" id="star-rating">
-                                                <i class="fas fa-star text-gray-400 cursor-pointer" data-index="1"></i>
-                                                <i class="fas fa-star text-gray-400 cursor-pointer" data-index="2"></i>
-                                                <i class="fas fa-star text-gray-400 cursor-pointer" data-index="3"></i>
-                                                <i class="fas fa-star text-gray-400 cursor-pointer" data-index="4"></i>
-                                                <i class="fas fa-star text-gray-400 cursor-pointer" data-index="5"></i>
+                                                <i class="fas fa-star text-gray-400 cursor-pointer"
+                                                    data-index="1"></i>
+                                                <i class="fas fa-star text-gray-400 cursor-pointer"
+                                                    data-index="2"></i>
+                                                <i class="fas fa-star text-gray-400 cursor-pointer"
+                                                    data-index="3"></i>
+                                                <i class="fas fa-star text-gray-400 cursor-pointer"
+                                                    data-index="4"></i>
+                                                <i class="fas fa-star text-gray-400 cursor-pointer"
+                                                    data-index="5"></i>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="flex items-center gap-5 mb-3">
-                                        <div class="mb-3 basis-1/2">
+
+                                    <div class="flex flex-col md:flex-row items-center gap-5">
+                                        <div class="mb-3 w-full md:w-1/2">
                                             <label
-                                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ trans('message.name') }}</label>
-                                            <input type="name" id="name"
-                                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                                {{ trans('message.name') }}
+                                            </label>
+                                            <input type="text" id="name"
+                                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg 
+                                                focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                                                 required />
                                         </div>
-            
-                                        <div class="mb-3 basis-1/2">
+
+                                        <div class="mb-3 w-full md:w-1/2">
                                             <label
-                                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ trans('message.email') }}</label>
+                                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                                {{ trans('message.email') }}
+                                            </label>
                                             <input type="email" id="email"
-                                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg 
+                                                focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                                                 required />
                                         </div>
                                     </div>
+
                                     <div>
-                                        <label
-                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ trans('message.content') }}</label>
+                                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                            {{ trans('message.content') }}
+                                        </label>
                                         <textarea id="comment"
-                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                            rows="5" cols="30" placeholder="{{ trans('message.write-here') }}"></textarea>
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg 
+                                            focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                                            rows="5" placeholder="{{ trans('message.write-here') }}"></textarea>
                                     </div>
+
                                     <button type="button" id="send-review"
-                                        class="flex justify-center items-center gap-2 text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800">
+                                        class="flex justify-center items-center gap-2 text-blue-700 hover:text-white 
+                                        border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 
+                                        font-medium rounded-lg text-sm px-5 py-2.5">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                             stroke-width="1.5" stroke="currentColor" class="size-6">
                                             <path stroke-linecap="round" stroke-linejoin="round"
@@ -250,79 +281,110 @@
                             </div>
                         </div>
                     </div>
+
                     <section class="relative">
-                        <div class="w-full max-w-7xl px-4 md:px-5 lg-6 mx-auto" id="comment-container">
-            
-                        </div>
-                        <div class="text-center">
-                            <p id="more-comment" class="text-blue-700 text-lg cursor-pointer p-5 font-mono">Xem thêm ...</p>
-                        </div>
+                        <div class="w-full max-w-7xl px-4 md:px-5 lg-6 mx-auto" id="comment-container"></div>
+                        <div class="flex justify-center">
+                            <button type="button" id="more-comment"
+                                class="uppercase flex justify-center items-center gap-2 text-blue-700 hover:text-white 
+                                border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 
+                                font-medium rounded-lg text-sm px-5 py-2.5">
+                                {{ trans('message.more') }}
+                            </button>
                         </div>
                     </section>
-                    <input type="hidden" id="product-id" value="{{ $data->id }}">
                 </section>
             </div>
-            <div id="tabs-with-badge-2" class="hidden tabcontent" role="tabpanel"
-                aria-labelledby="tabs-with-badge-item-2">
-                <div class="pl-[150px] pr-[150px]" style="line-height: 30px;">
+
+            </section>
+            <input type="hidden" id="product-id" value="{{ $data->id }}">
+            </section>
+        </div>
+        <div id="tabs-with-badge-2" class="hidden tabcontent" role="tabpanel"
+            aria-labelledby="tabs-with-badge-item-2">
+            <div class="px-4 sm:px-10 md:px-20 lg:px-[150px] leading-[30px]">
+                <div class="prose max-w-full">
                     {!! $data->description !!}
                 </div>
             </div>
-            <div id="tabs-with-badge-3" class="hidden tabcontent" role="tabpanel"
-                aria-labelledby="tabs-with-badge-item-3">
-                <div class="pl-[150px] pr-[150px]" style="line-height: 30px;">
-                    <p>{{trans('message.warranty-policy-1')}}</p><br>
-                    <img src="https://file.hstatic.net/200000278317/file/baohanh2_93b9597ceba746559f5ba19054546a1d.jpg" alt=""><br>
-                    <p>{{trans('message.warranty-policy-2')}}</p><br>
-                    <p><strong>{{trans('message.warranty-policy-3')}}</strong></p><br>
-                    <p>{{trans('message.warranty-policy-4')}}
-                        <strong>{{trans('message.warranty-policy-13')}}</strong>
-                        <span>{{trans('message.warranty-policy-14')}}</span>
-                    </p><br>
-                    <div class="ml-5">
-                        <p>{{trans('message.warranty-policy-5')}}</p>
-                        <p>{{trans('message.warranty-policy-6')}}</p>
-                        <p>{{trans('message.warranty-policy-7')}}</p>
-                    </div>
-                    <br>
-                    <p>{{trans('message.warranty-policy-8')}}
-                        <strong>{{trans('message.warranty-policy-15')}}</strong>
-                        <span>{{trans('message.warranty-policy-16')}}</span>
-                    </p><br>
-                    <div class="ml-5">
-                        <p>{{trans('message.warranty-policy-9')}}</p>
-                        <p>{{trans('message.warranty-policy-17')}}</p>
-                    </div>
-                    <br>
-                    <p>{{trans('message.warranty-policy-10')}}</p><br>
-                    <img src="https://file.hstatic.net/200000278317/file/baohanh1_b702947d711c4ffca5a837f8c9363d1d.jpg" alt="">
-                    <br>
-                    <p><strong>{{trans('message.warranty-policy-11')}}</strong></p><br>
-                    <p>{{trans('message.warranty-policy-12')}}</p>
-                    
+        </div>
+
+        <div id="tabs-with-badge-3" class="hidden tabcontent" role="tabpanel"
+            aria-labelledby="tabs-with-badge-item-3">
+            <div class="px-4 sm:px-10 md:px-20 lg:px-[150px] leading-[30px]">
+                <p>{{ trans('message.warranty-policy-1') }}</p><br>
+                <img class="max-w-full h-auto"
+                    src="https://file.hstatic.net/200000278317/file/baohanh2_93b9597ceba746559f5ba19054546a1d.jpg"
+                    alt=""><br>
+                <p>{{ trans('message.warranty-policy-2') }}</p><br>
+                <p><strong>{{ trans('message.warranty-policy-3') }}</strong></p><br>
+                <p>{{ trans('message.warranty-policy-4') }}
+                    <strong>{{ trans('message.warranty-policy-13') }}</strong>
+                    <span>{{ trans('message.warranty-policy-14') }}</span>
+                </p><br>
+                <div class="ml-5">
+                    <p>{{ trans('message.warranty-policy-5') }}</p>
+                    <p>{{ trans('message.warranty-policy-6') }}</p>
+                    <p>{{ trans('message.warranty-policy-7') }}</p>
                 </div>
-            </div>
-            <div id="tabs-with-badge-4" class="hidden tabcontent" role="tabpanel"
-                aria-labelledby="tabs-with-badge-item-4">
-                <div class="pl-[150px] pr-[150px]" style="line-height: 30px;">
-                    <p>{{trans('message.tip-shoe-1')}}</p><br>
-                    <p><strong>{{trans('message.tip-shoe-2')}}</strong></p><br>
-                    <img class="w-full" src="https://file.hstatic.net/200000278317/file/trang-break-in-giay-2_8b96a8d5d72d462685947682b1963ea2.jpg" alt=""><br>
-                    <p><strong>{{trans('message.tip-shoe-3')}}</strong></p><br>
-                    <p class="italic">{{trans('message.tip-shoe-4')}}</p><br>
-                    <img class="w-full" src="https://file.hstatic.net/200000278317/file/trang-break-in-giay-1_f006461552604f3bb0cccf4fe3b64c5e.jpg" alt=""><br>
-                    <p><strong>{{trans('message.tip-shoe-5')}}</strong></p><br>
-                    <img class="w-full" src="https://file.hstatic.net/200000278317/file/trang-break-in-giay-3_9804664335254ab3940fd6172881d3c7.jpg" alt="">
+                <br>
+                <p>{{ trans('message.warranty-policy-8') }}
+                    <strong>{{ trans('message.warranty-policy-15') }}</strong>
+                    <span>{{ trans('message.warranty-policy-16') }}</span>
+                </p><br>
+                <div class="ml-5">
+                    <p>{{ trans('message.warranty-policy-9') }}</p>
+                    <p>{{ trans('message.warranty-policy-17') }}</p>
                 </div>
+                <br>
+                <p>{{ trans('message.warranty-policy-10') }}</p><br>
+                <img class="max-w-full h-auto"
+                    src="https://file.hstatic.net/200000278317/file/baohanh1_b702947d711c4ffca5a837f8c9363d1d.jpg"
+                    alt=""><br>
+                <p><strong>{{ trans('message.warranty-policy-11') }}</strong></p><br>
+                <p>{{ trans('message.warranty-policy-12') }}</p>
             </div>
         </div>
+
+        <div id="tabs-with-badge-4" class="hidden tabcontent" role="tabpanel"
+            aria-labelledby="tabs-with-badge-item-4">
+            <div class="px-4 sm:px-10 md:px-20 lg:px-[150px] leading-[30px]">
+                <p>{{ trans('message.tip-shoe-1') }}</p><br>
+                <p><strong>{{ trans('message.tip-shoe-2') }}</strong></p><br>
+                <img class="w-full max-w-full h-auto"
+                    src="https://file.hstatic.net/200000278317/file/trang-break-in-giay-2_8b96a8d5d72d462685947682b1963ea2.jpg"
+                    alt=""><br>
+                <p><strong>{{ trans('message.tip-shoe-3') }}</strong></p><br>
+                <p class="italic">{{ trans('message.tip-shoe-4') }}</p><br>
+                <img class="w-full max-w-full h-auto"
+                    src="https://file.hstatic.net/200000278317/file/trang-break-in-giay-1_f006461552604f3bb0cccf4fe3b64c5e.jpg"
+                    alt=""><br>
+                <p><strong>{{ trans('message.tip-shoe-5') }}</strong></p><br>
+                <img class="w-full max-w-full h-auto"
+                    src="https://file.hstatic.net/200000278317/file/trang-break-in-giay-3_9804664335254ab3940fd6172881d3c7.jpg"
+                    alt="">
+            </div>
+        </div>
+
     </div>
+    </div>
+
+    <section class="pl-4 pr-4 sm:pl-10 sm:pr-10 pt-3 bg-white">
+        <div class="flex w-full items-center rounded-full pb-5 sm:pb-10 pt-5 gap-4">
+            <div class="w-full flex-1 border-b border-gray-300 sm:ml-10"></div>
+            <span class="text-black text-md sm:text-3xl font-semibold leading-8 sm:px-8 py-3 uppercase">{{ trans('message.product-related') }}</span>
+            <div class="w-full flex-1 border-b border-gray-300 sm:mr-10"></div>
+        </div>
+        <div id="product-container" class="pl-4 pr-4 sm:pl-10 sm:pr-10 grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+
+        </div>
+    </section>
 
 
 </x-app-layout>
 <script>
     $(document).ready(function() {
-        
+
         let goodJob = `{{ trans('message.good-job') }}`;
         let Error = `{{ trans('message.error') }}`;
         let wentWrong = `{{ trans('message.went-wrong') }}`;
@@ -332,30 +394,82 @@
 
         loadReview();
         let page = 1;
+        loadProduct();
+
+        function formatCurrency(number) {
+            return number.toLocaleString('vi-VN');
+        }
+
+        function loadProduct(page = 1, keyWord) {
+            $.ajax({
+                url: '/home/product',
+                method: 'GET',
+                data: {
+                    keyWord: keyWord,
+                    id: productId,
+                    type: 2,
+                },
+                success: function(response) {
+                    if (response.status === "success") {
+                        response.data.forEach(product => {
+                            let productContainer = `
+
+                                <a href="/home/product/detail/${product.id}">
+                                        <div class="mx-auto sm:mr-0 group cursor-pointer lg:mx-auto bg-white transition-all duration-500">
+                                            <img src="/storage/${product.main_image.image_url}" alt="face cream image"
+                                                class="w-full aspect-square rounded-2xl object-cover transition-opacity duration-300 sm:hover:opacity-80">
+                                            <div class="mt-3 sm:mt-5">
+                                                <div class="flex flex-col justify-between">
+                                                    <h6 class="h-18 sm:h-20 line-clamp-2 font-semibold text-xs sm:text-sm leading-6 sm:leading-8 text-black transition-all duration-500 group-hover:text-indigo-600">
+                                                        ${product.name}
+                                                    </h6>
+                                                    <p class="font-normal text-xs sm:text-sm leading-5 sm:leading-6 text-gray-500">${product.category.name}</p>
+                                                </div>
+                                                <div class="flex items-center justify-between">
+                                                    <h6 class="font-semibold text-lg sm:text-xl leading-7 sm:leading-8 text-indigo-600">
+                                                        ${formatCurrency(parseInt(product.price))}
+                                                    </h6> 
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+
+                                `;
+
+                            $("#product-container").append(productContainer);
+                        });
+                    }
+                },
+                error: function(error) {
+
+                }
+            });
+        }
 
         $('.btn-choose-size').on('click', function() {
 
             size = $(this).data('size');
 
-            $('.btn-choose-size').removeClass('border-2 border-blue-600').addClass('border border-gray-200');
+            $('.btn-choose-size').removeClass('border-2 border-blue-600').addClass(
+                'border border-gray-200');
 
             $(this).addClass('border-2 border-blue-600').removeClass('border border-gray-200');
 
         })
 
         $('#btn-decrease').on('click', function() {
-            let quantity = parseInt($('#quantity').val()); 
+            let quantity = parseInt($('#quantity').val());
             if (quantity >= 2) {
                 quantity -= 1;
-                $('#quantity').val(quantity); 
+                $('#quantity').val(quantity);
             }
         });
 
         $('#btn-increase').on('click', function() {
-            let quantity = parseInt($('#quantity').val()); 
+            let quantity = parseInt($('#quantity').val());
             if (quantity >= 1) {
                 quantity += 1;
-                $('#quantity').val(quantity); 
+                $('#quantity').val(quantity);
             }
         });
 
@@ -376,10 +490,16 @@
                     }
                 },
                 error: function(response) {
-                    swal(Error, wentWrong, 'error');
+                    if (response.status === 422) {
+                        let errorMessage = response.responseJSON.message;
+                        swal(Error, errorMessage, 'error');
+                    } else {
+                        swal(Error, wentWrong, 'error');
+                    }
                 },
-            })
-        })
+            });
+        });
+
 
         function loadReview(page) {
             $.ajax({
@@ -515,8 +635,13 @@
                         $('#comment-container').prepend(commentHtml);
                     }
                 },
-                error: function(error) {
-                    swal(Error, wentWrong, "error");
+                error: function(response) {
+                    if (response.status === 422) {
+                        let errorMessage = response.responseJSON.message;
+                        swal(Error, errorMessage, 'error');
+                    } else {
+                        swal(Error, wentWrong, 'error');
+                    }
                 },
                 complete: function() {
                     button.prop('disabled', false).html(`
@@ -538,6 +663,7 @@
         spaceBetween: 30,
         slidesPerView: 5,
     });
+
     var swiper = new Swiper(".main-slide-carousel", {
         slidesPerView: 1,
         thumbs: {

@@ -119,4 +119,7 @@ return [
   'brand' => 'Brand',
   'news' => 'Shoe news',
   'contact' => 'Contact',
+  'more' => 'See more',
+  'product-related' => 'Related products',
+
 ];

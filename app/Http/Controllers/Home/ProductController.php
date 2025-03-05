@@ -12,8 +12,7 @@ use Illuminate\Support\Facades\Validator;
 
 class ProductController extends Controller
 {
-    public function viewDetail($id)
-    {
+    public function viewDetail($id) {
 
         session()->forget('countCart');
         $data = Product::with('productSizes', 'mainImage', 'subImage', 'category')->findOrFail($id);
@@ -49,14 +48,32 @@ class ProductController extends Controller
         ]);
     }
 
-    public function getProduct(Request $request)
-    {
+    public function getProduct(Request $request) {
 
         if ($request->type == 1) {
             $data = Product::with('productSizes', 'mainImage', 'subImage', 'category')
                 ->inRandomOrder()
                 ->limit(4)
                 ->get();
+
+        } else if ($request->type == 2) {
+
+            $categoryId = Product::findOrFail($request->id)->category->id;
+
+            $data = Product::with('productSizes', 'mainImage', 'subImage', 'category')
+                        ->where('category_id', $categoryId)
+                        ->where('id', '!=', $request->id)
+                        ->limit(4)
+                        ->get();
+
+            if (!$data) {
+
+                $data = Product::with('productSizes', 'mainImage', 'subImage', 'category')
+                    ->inRandomOrder()
+                    ->limit(4)
+                    ->get();
+
+            }
         }
 
 
@@ -105,7 +122,7 @@ class ProductController extends Controller
 
         $productId = $request->product_id;
 
-        $data = Review::where('product_id', $productId)->latest()->paginate(2);
+        $data = Review::where('product_id', $productId)->latest()->paginate(5);
 
         return response()->json([
             'data' => $data,

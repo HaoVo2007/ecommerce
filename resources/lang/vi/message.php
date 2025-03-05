@@ -118,4 +118,7 @@ return [
     'brand' => 'Thương hiệu',
     'news' => 'Tin tức giày',
     'contact' => 'Liên hệ',
+    'more' => 'Xem thêm',
+    'product-related' => 'Sản phẩm liên quan',
+
 ];
